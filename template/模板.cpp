@@ -10,10 +10,11 @@ void my_swap(T& a, T& b)
     b = tmp;
 }
 
-template<typename T>
-void sorrt_Arr(T[] arr)
+template<class T>
+void sorrt_Arr(T arr[])
 {
-    for (int i = 0; i < sizeof(arr)/sizeof(T); i++)
+    int len = sizeof(arr) / sizeof(T);
+    for (int i = 0; i < len; i++)
     {
         int max = i;
         for (int j = i + 1; j < len; j++)
@@ -33,12 +34,13 @@ void sorrt_Arr(T[] arr)
 }
 
 template<typename T>
-void printA(T[] arr)
+void printA(T arr[], int len)
 {
     for (int i = 0; i < len; i++)
     {
         cout << arr[i] << " " << end;
     }
+    cout << endl;
 }
 
 void test1()
@@ -55,7 +57,7 @@ void test1()
 
     char charArr[] = "ceadf";
     sorrt_Arr(charArr);
-    printA(charArr);
+    printA(charArr, 6);
 }
 
 
