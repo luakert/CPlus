@@ -5,7 +5,7 @@
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
-
+.txt
 # User-specific files
 *.rsuser
 *.suo
