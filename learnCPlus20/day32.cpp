@@ -51,8 +51,9 @@ public:
     bool eatenBy(const Fish&) const override { return false; }
     bool eatenBy(const TRex&) const override { return true; }
 };
-int main()
+int main2()
 {
     cout << "hello world" << endl;
     system("pause");
+    return 0;
 }
