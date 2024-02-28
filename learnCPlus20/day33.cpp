@@ -73,10 +73,36 @@ void Logger::log(std::string message, Logger::LogLevel level)
 {
     if (m_logLevel < level)
     {
+        std::cout << static_cast<int>(level) << " is less " << static_cast<int>(m_logLevel) << std::endl;
         return;
     }
 
     m_outstream << getLogLevelString(level) << ":" << message << std::endl;
+}
+
+class NewLoggerInterface
+{
+public:
+    virtual ~NewLoggerInterface() = default;
+    virtual void log(std::string message) = 0;
+};
+
+class NewLoggerAdapter : public NewLoggerInterface
+{
+public:
+    NewLoggerAdapter();
+    void log(std::string message) override;
+private:
+    Logger m_logger{"info.txt"};
+};
+
+NewLoggerAdapter::NewLoggerAdapter() {
+    std::cout << "NewLoggerAdapter constructor " << std::endl;
+}
+
+void NewLoggerAdapter::log(std::string message) {
+    // m_logger.setLogLevel(Logger::LogLevel::Debug);
+    m_logger.log(message, Logger::LogLevel::Info);
 }
 
 class Foo
@@ -248,6 +274,60 @@ std::unique_ptr<ICar> LeastBusyFactory::createCar()
     return bestsofar->requestCar();
 }
 
+class IPlayer
+{
+public:
+    virtual ~IPlayer() = default;
+    virtual std::string getName() const = 0;
+    virtual std::string sendMessage(std::string message) const = 0;
+};
+
+class Player : public IPlayer
+{
+public:
+    Player(std::string& name);
+    std::string getName() const override;
+    std::string sendMessage(std::string message) const override;
+private:
+    std::string m_name;
+};
+
+Player::Player(std::string& name) : m_name(name) {
+    std::cout << "Player construction" << std::endl;
+}
+
+std::string Player::getName() const {
+    return m_name;
+}
+
+std::string Player::sendMessage(std::string message) const {
+    return "yes";
+}
+
+class PlayerProxy : public IPlayer
+{
+public:
+    PlayerProxy(std::unique_ptr<IPlayer> player);
+    std::string getName() const override;
+    std::string sendMessage(std::string message) const override;
+private:
+    std::unique_ptr<IPlayer> m_player;
+};
+
+PlayerProxy::PlayerProxy(std::unique_ptr<IPlayer> player) : m_player(move(player)) {
+
+}
+
+std::string PlayerProxy::sendMessage(std::string message) const {
+    return m_player->sendMessage(message);
+}
+
+std::string PlayerProxy::getName() const {
+    return m_player->getName();
+}
+
+
+
 int main()
 {
 //    Logger con("Log.txt");
@@ -255,33 +335,36 @@ int main()
 //
 //    Foo f(con);
 //    f.doSomething();
-    FordFactory fordfactory;
-    ToyotaFactory toyotafactory;
-
-    createSomeCar(fordfactory);
-    createSomeCar(toyotafactory);
-
-    ToyotaFactory2 tofactory2;
-    auto myCar{ tofactory2.requestCar() };
-    std::cout << " factory2 " << myCar->info() << std::endl;
-
-    std::vector<std::unique_ptr<CarFactory>> factories;
-
-    factories.push_back(std::make_unique<FordFactory2>());
-    factories.push_back(std::make_unique<FordFactory2>());
-    factories.push_back(std::make_unique<FordFactory2>());
-    factories.push_back(std::make_unique<ToyotaFactory2>());
-
-    factories[0]->requestCar();
-    factories[0]->requestCar();
-    factories[1]->requestCar();
-    factories[3]->requestCar();
-
-    LeastBusyFactory leastfactory{ move(factories) };
-    for (size_t i = 0; i < 10; i++)
-    {
-        auto car{ leastfactory.requestCar() };
-        std::cout << car->info() << std::endl;
-    }
+//    FordFactory fordfactory;
+//    ToyotaFactory toyotafactory;
+//
+//    createSomeCar(fordfactory);
+//    createSomeCar(toyotafactory);
+//
+//    ToyotaFactory2 tofactory2;
+//    auto myCar{ tofactory2.requestCar() };
+//    std::cout << " factory2 " << myCar->info() << std::endl;
+//
+//    std::vector<std::unique_ptr<CarFactory>> factories;
+//
+//    factories.push_back(std::make_unique<FordFactory2>());
+//    factories.push_back(std::make_unique<FordFactory2>());
+//    factories.push_back(std::make_unique<FordFactory2>());
+//    factories.push_back(std::make_unique<ToyotaFactory2>());
+//
+//    factories[0]->requestCar();
+//    factories[0]->requestCar();
+//    factories[1]->requestCar();
+//    factories[3]->requestCar();
+//
+//    LeastBusyFactory leastfactory{ move(factories) };
+//    for (size_t i = 0; i < 10; i++)
+//    {
+//        auto car{ leastfactory.requestCar() };
+//        std::cout << car->info() << std::endl;
+//    }
+//
+//    NewLoggerAdapter newloggerAdapter;
+//    newloggerAdapter.log("new adapter log");
     system("pause");
 }
