@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 #include <vector>
+#include <map>
 
 class ILogger
 {
@@ -326,7 +327,66 @@ std::string PlayerProxy::getName() const {
     return m_player->getName();
 }
 
+using EventHandle = size_t;
 
+template <typename... Args>
+class Event
+{
+public:
+    virtual ~Event() = default;
+    EventHandle operator+=(function<void(Args...)> observer)
+    {
+        auto number{ ++m_counter };
+        m_observers[number] = observer;
+        return number;
+    }
+
+    Event& operation-=(EventHandle handle)
+    {
+        m_observers.earse(handle);
+        return *this;
+    }
+
+    void raise(Args... args)
+    {
+        for (auto& observer : m_observers) {
+            (observer.second)(args...);
+        }
+
+    }
+private:
+    size_t m_counter{ 0 };
+    map<EventHandle, function<void(Args...)>> m_observers;
+};
+
+class ObservableSubject
+{
+public:
+    auto& getEventDataModified() { return m_eventDataModified; }
+    auto& getEventDataDeleted() { return m_eventDataDeleted; }
+
+    void modifyData()
+    {
+        getEventDataModified().raise(1, 2.3);
+    }
+
+    void deleteData()
+    {
+        getEventDataDeleted().raise();
+    }
+
+private:
+    Event<int, double> m_eventDataModified;
+    Event<> m_eventDataDeleted;
+};
+
+class Observer
+{
+public:
+    Observer(ObservableSubject& subject) : m_
+private:
+    void onSub
+};
 
 int main()
 {
