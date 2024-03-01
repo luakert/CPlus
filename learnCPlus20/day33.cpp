@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 #include <map>
+#include <cstddef>
+#include <functional>
 
 class ILogger
 {
@@ -334,16 +336,16 @@ class Event
 {
 public:
     virtual ~Event() = default;
-    EventHandle operator+=(function<void(Args...)> observer)
+    [[nodiscard]] EventHandle operator+=(std::function<void(Args...)> observer)
     {
         auto number{ ++m_counter };
         m_observers[number] = observer;
         return number;
     }
 
-    Event& operation-=(EventHandle handle)
+    Event& operator-=(EventHandle handle)
     {
-        m_observers.earse(handle);
+        m_observers.erase(handle);
         return *this;
     }
 
@@ -356,7 +358,7 @@ public:
     }
 private:
     size_t m_counter{ 0 };
-    map<EventHandle, function<void(Args...)>> m_observers;
+    std::map<EventHandle, std::function<void(Args...)>> m_observers;
 };
 
 class ObservableSubject
@@ -367,7 +369,7 @@ public:
 
     void modifyData()
     {
-        getEventDataModified().raise(1, 2.3);
+        getEventDataModified().raise(1, 2.4);
     }
 
     void deleteData()
@@ -380,13 +382,43 @@ private:
     Event<> m_eventDataDeleted;
 };
 
+void modified(int, double)
+{
+    std::cout << "modified" << std::endl;
+}
+
 class Observer
 {
 public:
-    Observer(ObservableSubject& subject) : m_
+    Observer(ObservableSubject& subject) : m_subject{ subject }
+    {
+        m_subjectModifiedHandle = m_subject.getEventDataModified() +=
+            [this](int i, double d) {onSubjectModified(i, d); };
+    }
+
+    virtual ~Observer()
+    {
+        m_subject.getEventDataModified()-=m_subjectModifiedHandle;
+    }
 private:
-    void onSub
+    void onSubjectModified(int, double)
+    {
+        std::cout << "Observer::onSubjectModified()" << std::endl;
+    }
+
+    ObservableSubject& m_subject;
+    EventHandle m_subjectModifiedHandle;
 };
+
+
+
+//class Observer
+//{
+//public:
+//    Observer(ObservableSubject& subject) : m_
+//private:
+//    void onSub
+//};
 
 int main()
 {
@@ -426,5 +458,16 @@ int main()
 //
 //    NewLoggerAdapter newloggerAdapter;
 //    newloggerAdapter.log("new adapter log");
+    ObservableSubject subject;
+    auto handleModifi{ subject.getEventDataModified() += modified };
+    auto handleDelete{ subject.getEventDataDeleted() += [] {std::cout << "delete" << std::endl; } };
+    subject.modifyData();
+    subject.deleteData();
+
+    std::cout << std::endl;
+
+    subject.getEventDataModified() -= handleModifi;
+    subject.modifyData();
+    subject.deleteData();
     system("pause");
 }
