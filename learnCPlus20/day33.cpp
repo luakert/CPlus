@@ -354,7 +354,6 @@ public:
         for (auto& observer : m_observers) {
             (observer.second)(args...);
         }
-
     }
 private:
     size_t m_counter{ 0 };
@@ -410,57 +409,98 @@ private:
     EventHandle m_subjectModifiedHandle;
 };
 
-
-
-//class Observer
-//{
-//public:
-//    Observer(ObservableSubject& subject) : m_
-//private:
-//    void onSub
-//};
-
-int main()
+class IParagraph
 {
-//    Logger con("Log.txt");
-//    con.setLogLevel(ILogger::LogLevel::Debug);
-//
-//    Foo f(con);
-//    f.doSomething();
-//    FordFactory fordfactory;
-//    ToyotaFactory toyotafactory;
-//
-//    createSomeCar(fordfactory);
-//    createSomeCar(toyotafactory);
-//
-//    ToyotaFactory2 tofactory2;
-//    auto myCar{ tofactory2.requestCar() };
-//    std::cout << " factory2 " << myCar->info() << std::endl;
-//
-//    std::vector<std::unique_ptr<CarFactory>> factories;
-//
-//    factories.push_back(std::make_unique<FordFactory2>());
-//    factories.push_back(std::make_unique<FordFactory2>());
-//    factories.push_back(std::make_unique<FordFactory2>());
-//    factories.push_back(std::make_unique<ToyotaFactory2>());
-//
-//    factories[0]->requestCar();
-//    factories[0]->requestCar();
-//    factories[1]->requestCar();
-//    factories[3]->requestCar();
-//
-//    LeastBusyFactory leastfactory{ move(factories) };
-//    for (size_t i = 0; i < 10; i++)
-//    {
-//        auto car{ leastfactory.requestCar() };
-//        std::cout << car->info() << std::endl;
-//    }
-//
-//    NewLoggerAdapter newloggerAdapter;
-//    newloggerAdapter.log("new adapter log");
+public:
+    virtual ~IParagraph() = default;
+    virtual std::string getHMTL() const = 0;
+};
+
+class Paragraph : public IParagraph
+{
+public:
+    Paragraph(std::string text) : m_text{ std::move(text) } {}
+    std::string getHMTL() const override { return "<P>" + m_text + "</P>"; }
+private:
+    std::string m_text;
+};
+
+class BoldParagraph : public IParagraph
+{
+public:
+    BoldParagraph(const IParagraph& paragraph) : m_paragraph{ paragraph } {}
+    std::string getHMTL() const override {
+        return "<B>" + m_paragraph.getHMTL() + "</B>";
+    }
+private:
+    const IParagraph& m_paragraph;
+};
+
+class ItaliParagraph : public IParagraph
+{
+public:
+    ItaliParagraph(const IParagraph& paragraph) : m_paragraph{ paragraph } {}
+    std::string getHMTL() const override {
+        return "<I>" + m_paragraph.getHMTL() + "</I>";
+    }
+private:
+    const IParagraph& m_paragraph;
+};
+
+void testInject()
+{
+	Logger con("Log.txt");
+	con.setLogLevel(ILogger::LogLevel::Debug);
+}
+
+void testFactory()
+{
+    //Foo f(con);
+    // f.doSomething();
+    FordFactory fordfactory;
+    ToyotaFactory toyotafactory;
+
+    createSomeCar(fordfactory);
+    createSomeCar(toyotafactory);
+}
+
+void testFactory2()
+{
+    ToyotaFactory2 tofactory2;
+    auto myCar{ tofactory2.requestCar() };
+    std::cout << " factory2 " << myCar->info() << std::endl;
+
+    std::vector<std::unique_ptr<CarFactory>> factories;
+
+    factories.push_back(std::make_unique<FordFactory2>());
+    factories.push_back(std::make_unique<FordFactory2>());
+    factories.push_back(std::make_unique<FordFactory2>());
+    factories.push_back(std::make_unique<ToyotaFactory2>());
+
+    factories[0]->requestCar();
+    factories[0]->requestCar();
+    factories[1]->requestCar();
+    factories[3]->requestCar();
+
+    LeastBusyFactory leastfactory{ move(factories) };
+    for (size_t i = 0; i < 10; i++)
+    {
+        auto car{ leastfactory.requestCar() };
+        std::cout << car->info() << std::endl;
+    }
+}
+
+void testAdapter() {
+    NewLoggerAdapter newloggerAdapter;
+    newloggerAdapter.log("new adapter log");
+}
+
+void testObserver()
+{
     ObservableSubject subject;
     auto handleModifi{ subject.getEventDataModified() += modified };
     auto handleDelete{ subject.getEventDataDeleted() += [] {std::cout << "delete" << std::endl; } };
+    Observer obser{ subject };
     subject.modifyData();
     subject.deleteData();
 
@@ -469,5 +509,16 @@ int main()
     subject.getEventDataModified() -= handleModifi;
     subject.modifyData();
     subject.deleteData();
+}
+
+void testDecorator()
+{
+	Paragraph p{ "A party?" };
+	std::cout << BoldParagraph{ p }.getHMTL() << std::endl;
+    std::cout << ItaliParagraph{ BoldParagraph{p } }.getHMTL() << std::endl;
+}
+int main()
+{
+    testDecorator();
     system("pause");
 }
