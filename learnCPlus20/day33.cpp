@@ -517,8 +517,205 @@ void testDecorator()
 	std::cout << BoldParagraph{ p }.getHMTL() << std::endl;
     std::cout << ItaliParagraph{ BoldParagraph{p } }.getHMTL() << std::endl;
 }
+
+enum class EventChain
+{
+    LeftMouseButtonDown,
+    LeftMouseButtonUp,
+    RightMouseButtonUp,
+    RightMouseButtonDown
+};
+
+class HandlerChain
+{
+public:
+    virtual ~HandlerChain() = default;
+    explicit HandlerChain(HandlerChain* nextHandler): m_nextHandler{nextHandler}{}
+    virtual void handleMessage(EventChain message)
+    {
+        if (m_nextHandler)
+        {
+            m_nextHandler->handleMessage(message);
+        }
+    }
+private:
+    HandlerChain* m_nextHandler;
+};
+
+class Application : public HandlerChain
+{
+public:
+    explicit Application(HandlerChain* nextHandler) :HandlerChain{ nextHandler } {}
+    void handleMessage(EventChain message) override
+    {
+        std::cout << "Application handle message" << std::endl;
+        if (message == EventChain::RightMouseButtonDown)
+        {
+            std::cout << "handle event RightMouseButtonDown" << std::endl;
+        }
+        else {
+            HandlerChain::handleMessage(message);
+        }
+    }
+};
+
+class Window : public HandlerChain
+{
+public:
+    explicit Window(HandlerChain* nextHandler) :HandlerChain{ nextHandler } {}
+    void handleMessage(EventChain message) override
+    {
+        std::cout << "Windows handle message" << std::endl;
+        if (message == EventChain::LeftMouseButtonUp)
+        {
+            std::cout << "handle event LeftMouseButtonUp" << std::endl;
+        }
+        else {
+            HandlerChain::handleMessage(message);
+        }
+    }
+};
+
+class Shape : public HandlerChain
+{
+public:
+    explicit Shape(HandlerChain* nextHandler) :HandlerChain{ nextHandler } {}
+    void handleMessage(EventChain message) override
+    {
+        std::cout << "Shapes handle message" << std::endl;
+        if (message == EventChain::LeftMouseButtonDown)
+        {
+            std::cout << "handle event LeftMouseButtonDown" << std::endl;
+        }
+        else {
+            HandlerChain::handleMessage(message);
+        }
+    }
+};
+
+void testChain()
+{
+	Application app{ nullptr };
+    Window window{ &app };
+    Shape shape{ &window };
+
+    shape.handleMessage(EventChain::LeftMouseButtonDown);
+    std::cout << std::endl;
+
+    shape.handleMessage(EventChain::LeftMouseButtonUp);
+    std::cout << std::endl;
+
+    shape.handleMessage(EventChain::RightMouseButtonDown);
+    std::cout << std::endl;
+    
+    shape.handleMessage(EventChain::RightMouseButtonUp);
+    std::cout << std::endl;
+}
+
+class LoggerSingleton final
+{
+public:
+    enum class LogLevel {
+        Error,
+        Info,
+        Debug
+    };
+
+    static void setLogFileName(std::string_view logFileName);
+
+    static LoggerSingleton& instance();
+
+    LoggerSingleton(const LoggerSingleton&) = delete;
+    LoggerSingleton(LoggerSingleton&&) = delete;
+
+    LoggerSingleton& operator=(const LoggerSingleton&) = delete;
+    LoggerSingleton& operator=(LoggerSingleton&&) = delete;
+
+    void setLoggerLevel(LogLevel level);
+
+    void log(std::string_view message, LogLevel loglevel);
+private:
+    LoggerSingleton();
+    ~LoggerSingleton();
+
+    std::string_view getLogLevelString(LogLevel level) const;
+
+    static std::string ms_logFileName;
+    std::ofstream m_outputStream;
+    LogLevel m_LogLevel{ LogLevel::Error };
+};
+
+std::string LoggerSingleton::ms_logFileName;
+
+void LoggerSingleton::setLogFileName(std::string_view logFileName)
+{
+    ms_logFileName = logFileName.data();
+}
+
+LoggerSingleton& LoggerSingleton::instance()
+{
+    static LoggerSingleton instance;
+    return instance;
+}
+
+LoggerSingleton::LoggerSingleton()
+{
+    m_outputStream.open(ms_logFileName, std::ios_base::app);
+    if (!m_outputStream.good())
+    {
+        throw std::runtime_error{ "unable to initialize the Logger" };
+    }
+}
+
+LoggerSingleton::~LoggerSingleton()
+{
+    m_outputStream << "Logger shutting down" << std::endl;
+    m_outputStream.close();
+}
+
+void LoggerSingleton::setLoggerLevel(LogLevel level)
+{
+    m_LogLevel = level;
+}
+
+std::string_view LoggerSingleton::getLogLevelString(LoggerSingleton::LogLevel level) const
+{
+    switch (level)
+    {
+    case LoggerSingleton::LogLevel::Error:
+        return "Error";
+    case LoggerSingleton::LogLevel::Info:
+        return "Info";
+    case LoggerSingleton::LogLevel::Debug:
+        return "Debug";
+    }
+ }
+
+void LoggerSingleton::log(std::string_view message, LoggerSingleton::LogLevel level)
+{
+    if (m_LogLevel < level)
+    {
+        std::cout << static_cast<int>(level) << " is less " << static_cast<int>(m_LogLevel) << std::endl;
+        return;
+    }
+
+    m_outputStream << getLogLevelString(level) << ":" << message << std::endl;
+}
+
+void testSingleton()
+{
+    LoggerSingleton::setLogFileName("log.out");
+    LoggerSingleton::instance().setLoggerLevel(LoggerSingleton::LogLevel::Debug);
+    LoggerSingleton::instance().log("test message", LoggerSingleton::LogLevel::Debug);
+    
+    LoggerSingleton::instance().setLoggerLevel(LoggerSingleton::LogLevel::Error);
+    LoggerSingleton::instance().log("a debug message", LoggerSingleton::LogLevel::Debug);
+
+}
 int main()
 {
-    testDecorator();
+    // testDecorator();
+    // testChain();
+    testSingleton();
     system("pause");
 }
