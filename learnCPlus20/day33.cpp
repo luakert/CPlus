@@ -712,10 +712,11 @@ void testSingleton()
     LoggerSingleton::instance().log("a debug message", LoggerSingleton::LogLevel::Debug);
 
 }
-int main()
+int main33()
 {
     // testDecorator();
     // testChain();
     testSingleton();
     system("pause");
+    return 1;
 }
