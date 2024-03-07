@@ -39,5 +39,11 @@
     <ClCompile Include="Employee.cpp">
       <Filter>源文件\Day1</Filter>
     </ClCompile>
+    <ClCompile Include="database.cppm">
+      <Filter>源文件\Day1</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>源文件\Day1</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
