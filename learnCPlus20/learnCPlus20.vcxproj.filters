@@ -22,6 +22,9 @@
     <Filter Include="源文件\Day1">
       <UniqueIdentifier>{6f454312-7efb-4083-b0eb-6fc524c1e8ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day2">
+      <UniqueIdentifier>{2048dd60-99f3-4762-a9f5-dfdf34116190}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -44,6 +47,9 @@
     </ClCompile>
     <ClCompile Include="Database.cpp">
       <Filter>源文件\Day1</Filter>
+    </ClCompile>
+    <ClCompile Include="day2.cpp">
+      <Filter>源文件\Day2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

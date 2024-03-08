@@ -147,10 +147,11 @@ void doPromote(DataBase& db)
 
 
 
-int main()
+int main1()
 {
 	// test01();
 	//test03();
 	test04();
 	system("pause");
+	return 1;
 }

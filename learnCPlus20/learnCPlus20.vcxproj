@@ -127,6 +127,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="database.cppm" />
     <ClCompile Include="day1.cpp" />
+    <ClCompile Include="day2.cpp" />
     <ClCompile Include="day33.cpp" />
     <ClCompile Include="day32.cpp" />
     <ClCompile Include="Employee.cpp" />
