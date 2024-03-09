@@ -88,8 +88,31 @@ void testConversion()
 	}
 }
 
+string_view extractionString(string_view fileName)
+{
+	return fileName.substr(fileName.rfind('.'));
+}
+
+void testString_View()
+{
+	string filename{ R"(C:\temp\my file.txt)" };
+	cout << format("C++ string {}", extractionString(filename)) << endl;
+
+	const char* cString{ R"(C:\temp\my fileCstring.txt)" };
+	cout << format("C string {}", extractionString(cString)) << endl;
+
+	cout << format("Literal {}", extractionString(R"(C:\temp\my literal.txt)"))<< endl;
+
+	const char* raw{ "hello. wo.rld!" };
+	size_t length{ 20 };
+	cout << format("string_view {}", string_view{ raw, length }) << endl;
+	cout << format("Raw {}", extractionString({ raw, length })) << endl;
+	cout << format("Raw string_view {}", extractionString(string_view{ raw, length })) << endl;
+}
+
 int main()
 {
-	testConversion();
+	// testConversion();
+	testString_View();
 	system("pause");
 }
