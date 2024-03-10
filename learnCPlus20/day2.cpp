@@ -110,9 +110,53 @@ void testString_View()
 	cout << format("Raw string_view {}", extractionString(string_view{ raw, length })) << endl;
 }
 
+int* my_alloc(int value) { return new int{ value }; }
+
+void my_free(int* p) { delete p; }
+
+void testCustom()
+{
+	// 
+	unique_ptr<int, decltype(&my_free )> myIntSmartptr{my_alloc(42), my_free};
+	unique_ptr<string> myStr { new string{"aa"} };
+}
+
+void test06()
+{
+	auto a = make_unique<int>(6);
+	int* b = a.get();
+	cout << "value is " << *a << " b=" << *b << endl;
+
+	a.reset();
+
+	if (a == nullptr)
+	{
+		cout << "a alread is null ptr" << endl;
+	}
+
+	cout << " b=" << *b << endl;
+}
+
+void testShareAlias()
+{
+	class Foo
+	{
+	public:
+		Foo(int value):m_value(value){}
+		int m_value;
+	};
+	// 主要用于访问实例中的变量，避免实例被释放，增强对实例的控制
+	auto foo{ make_shared<Foo>(1) };
+	auto alias{ shared_ptr<int> {foo,&foo->m_value} };
+	foo->m_value = 3;
+	cout << "foo =" << foo->m_value << " alias=" << *alias<< endl;
+}
+
 int main()
 {
 	// testConversion();
-	testString_View();
+	// testString_View();
+	// test06();
+	testShareAlias();
 	system("pause");
 }

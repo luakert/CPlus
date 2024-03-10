@@ -25,6 +25,9 @@
     <Filter Include="源文件\Day2">
       <UniqueIdentifier>{2048dd60-99f3-4762-a9f5-dfdf34116190}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day7">
+      <UniqueIdentifier>{b9f74185-3dd3-4647-91f5-f4c8ac9d341b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
