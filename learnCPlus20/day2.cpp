@@ -152,11 +152,12 @@ void testShareAlias()
 	cout << "foo =" << foo->m_value << " alias=" << *alias<< endl;
 }
 
-int main()
+int main3()
 {
 	// testConversion();
 	// testString_View();
 	// test06();
 	testShareAlias();
 	system("pause");
+	return 1;
 }

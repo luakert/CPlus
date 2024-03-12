@@ -28,6 +28,12 @@
     <Filter Include="源文件\Day7">
       <UniqueIdentifier>{b9f74185-3dd3-4647-91f5-f4c8ac9d341b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day8">
+      <UniqueIdentifier>{5e210243-32bf-40fb-8383-0ac249e93b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Day9">
+      <UniqueIdentifier>{6d03f295-9de6-4ac2-be3c-680eda98f83f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -53,6 +59,21 @@
     </ClCompile>
     <ClCompile Include="day2.cpp">
       <Filter>源文件\Day2</Filter>
+    </ClCompile>
+    <ClCompile Include="day8.cpp">
+      <Filter>源文件\Day8</Filter>
+    </ClCompile>
+    <ClCompile Include="day9.cpp">
+      <Filter>源文件\Day9</Filter>
+    </ClCompile>
+    <ClCompile Include="Spreadsheet.cppm">
+      <Filter>源文件\Day9</Filter>
+    </ClCompile>
+    <ClCompile Include="SpreadsheetCell.cppm">
+      <Filter>源文件\Day9</Filter>
+    </ClCompile>
+    <ClCompile Include="Spreadsheetcell.cpp">
+      <Filter>源文件\Day9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
