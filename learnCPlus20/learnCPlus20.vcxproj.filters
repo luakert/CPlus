@@ -75,5 +75,8 @@
     <ClCompile Include="Spreadsheetcell.cpp">
       <Filter>源文件\Day9</Filter>
     </ClCompile>
+    <ClCompile Include="Spreadsheet.cpp">
+      <Filter>源文件\Day9</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

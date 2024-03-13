@@ -134,6 +134,7 @@
     <ClCompile Include="day9.cpp" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="Employee.cppm" />
+    <ClCompile Include="Spreadsheet.cpp" />
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
