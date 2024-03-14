@@ -21,3 +21,5 @@ private:
 
 	double m_value{ 0 };
 };
+
+export SpreadsheetCell operator+(const SpreadsheetCell& lhs, const SpreadsheetCell& rhs);

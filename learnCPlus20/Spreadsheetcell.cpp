@@ -44,3 +44,8 @@ double SpreadsheetCell::stringToDouble(string_view value) const
 	from_chars(value.data(), value.data() + value.size(), number);
 	return number;
 }
+
+SpreadsheetCell operator+(const SpreadsheetCell& lhs, const SpreadsheetCell& rhs)
+{
+	return SpreadsheetCell{ lhs.getValue() + rhs.getValue()};
+}

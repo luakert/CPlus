@@ -21,6 +21,7 @@ Spreadsheet::~Spreadsheet()
 
 	delete[] m_cells;
 	m_cells = nullptr;
+	m_height = m_width = 0;
 }
 
 void Spreadsheet::swap(Spreadsheet& other) noexcept
@@ -76,6 +77,10 @@ Spreadsheet& Spreadsheet::operator=(Spreadsheet&& rhs) noexcept
 	return *this;
 }
 
+bool Spreadsheet::inRange(size_t walue, size_t upper) const
+{
+	return walue < upper;
+}
 
 void Spreadsheet::cleanup() noexcept
 {
