@@ -22,8 +22,9 @@ void test0901()
 	cout << move(txtHolder).getText() << endl;
 }
 
-int main()
+int main9()
 {
 	test0901();
 	system("pause");
+	return 10;
 }
