@@ -65,15 +65,65 @@ public:
 	Derived2(float f) : Base1(f), Base2(f) {}
 };
 
+class Base3
+{
+public:
+	virtual ~Base3() = default;
+	Base3() = default;
+	Base3(const Base3& src){}
+};
+
+class Derived3 :public Base3
+{
+public:
+	Derived3() = default;
+	//使用基类的拷贝构造函数
+	Derived3(const Derived3& src) : Base3{src}{}
+	Derived3& operator=(const Derived3& src);
+};
+
+Derived3& Derived3::operator=(const Derived3& rhs) 
+{
+	if (&rhs == this) { return *this; }
+	// 需要调用父类版本的operator=
+	Base3::operator=(rhs);
+	return *this;
+}
+
+class Loggable10
+{
+public:
+	virtual ~Loggable10() = default;
+	virtual std::string getLogMessage() const = 0;
+};
+
+class Foo : public Loggable10
+{
+public:
+	std::string getLogMessage() const override { return "Hello world"; }
+};
+
+void logObject(const Loggable10& logObject)
+{
+	cout << typeid(logObject).name() << ":";
+	cout << logObject.getLogMessage() << endl;
+}
+
+
 void test1002()
 {
 	Derived2 d{ 1.2f };
 }
 
+void test1003()
+{
+	Foo fo;
+	logObject(fo);
+}
 
 int main()
 {
-	test1002();
+	test1003();
 	system("pause");
 }
 
