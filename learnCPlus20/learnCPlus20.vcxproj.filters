@@ -37,6 +37,9 @@
     <Filter Include="源文件\Day10">
       <UniqueIdentifier>{ee49ff1f-77d4-40b3-931b-ae56e639f8db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day12">
+      <UniqueIdentifier>{bea8c890-1090-4ec5-bcd7-1d881148cf44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -83,6 +86,12 @@
     </ClCompile>
     <ClCompile Include="day10.cpp">
       <Filter>源文件\Day10</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cppm">
+      <Filter>源文件\Day12</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>源文件\Day12</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
