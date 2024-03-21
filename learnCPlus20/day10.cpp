@@ -109,7 +109,6 @@ void logObject(const Loggable10& logObject)
 	cout << logObject.getLogMessage() << endl;
 }
 
-
 void test1002()
 {
 	Derived2 d{ 1.2f };
@@ -121,10 +120,11 @@ void test1003()
 	logObject(fo);
 }
 
-int main()
+int main10()
 {
 	test1003();
 	system("pause");
+	return 0;
 }
 
 

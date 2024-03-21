@@ -93,5 +93,8 @@
     <ClCompile Include="Grid.cpp">
       <Filter>源文件\Day12</Filter>
     </ClCompile>
+    <ClCompile Include="day12.cpp">
+      <Filter>源文件\Day12</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

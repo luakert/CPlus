@@ -5,8 +5,8 @@ import <vector>;
 import <optional>;
 import <cstddef>;
 import <stdexcept>;
-import <format>;
 import <utility>;
+import <format>;
 
 export template<typename T>
 class Grid
@@ -67,5 +67,106 @@ const std::optional<T>& Grid<T>::at(size_t x, size_t y) const
 template <typename T>
 std::optional<T>& Grid<T>::at(size_t x, size_t y)
 {
-	return const_cast<std::optional<T>&>(as_const(*this).at(x, y));
+	return const_cast<std::optional<T>&>(std::as_const(*this).at(x, y));
+}
+
+export template<typename T, size_t WIDTH, size_t HEIGHT>
+class Grid2
+{
+public:
+	Grid2() = default;
+	virtual ~Grid2() = default;
+
+	Grid2(const Grid2& src) = default;
+	Grid2& operator=(const Grid2& src) = default;
+
+	std::optional<T>& at(size_t x, size_t y);
+	const std::optional<T>& at(size_t x, size_t y) const;
+
+	size_t getHeight() const { return HEIGHT; }
+	size_t getWidth() const { return WIDTH; }
+
+private:
+	void verfiy(size_t x, size_t y) const;
+	std::optional<T> m_cells[WIDTH][HEIGHT];
+};
+
+template<typename T, size_t WIDTH, size_t HEIGHT>
+void Grid2<T, WIDTH, HEIGHT>::verfiy(size_t x, size_t y) const
+{
+	if (x >= WIDTH || y >= HEIGHT)
+	{
+		throw std::out_of_range(std::format("{}or {} must be less than {}", x, y, WIDTH));
+	}
+}
+template<typename T, size_t WIDTH, size_t HEIGHT>
+const std::optional<T>& Grid2<T, WIDTH, HEIGHT>::at(size_t x, size_t y) const
+{
+	verfiy(x, y);
+	return m_cells[x][y];
+}
+
+template<typename T, size_t WIDTH, size_t HEIGHT>
+std::optional<T>& Grid2<T, WIDTH, HEIGHT>::at(size_t x, size_t y)
+{
+	return const_cast<std::optional<T>&>(std::as_const(*this).at(x, y));
+}
+
+export template<typename T>
+class DeducationGuides
+{
+public:
+	DeducationGuides(const T& t): m_content(t) {}
+	const T& getContent() const { return m_content; }
+	private:
+		T m_content;
+};
+
+DeducationGuides(const char*)->DeducationGuides<std::string>;
+
+export template<typename T, size_t WIDTH, size_t HEIGHT>
+class Grid3
+{
+public:
+	exlicit Grid(size_t width, size_t height);
+	virtual ~Grid3() = default;
+
+	template<typename E>
+	Grid3(const Grid3<E>& src);
+
+	template<typename E>
+	Grid3<T>& operator=(const Grid3<E>& rhs);
+
+	void swap(Grid3& other) noexcept;
+
+	std::optional<T>& at(size_t x, size_t y);
+	const std::optional<T>& at(size_t x, size_t y) const;
+
+	size_t getHeight() const { return m_height; };
+	size_t getWidth() const { return m_width; }
+private:
+	size_t m_width{ 0 }, m_height{ 0 };
+	std::vector<std::vector<std::optional<T>>> m_cells;
+
+};
+
+template<typename T>
+template<typename E>
+Grid3<T>::Grid3(const Grid3<E>& src) : Grid3{ src.getWidth, src.getHeight() }
+{
+	for (size_t i = 0; i < m_with; i++)
+	{
+		for (size_t j = 0; j < m_height j++)
+		{
+			m_celss[i][j] = src.at(i, j);
+		}
+	}
+}
+
+template<typename T>
+void Grid3<T>::swap(Grid& other) noexcept
+{
+	std::swap(m_width, other.m_width);
+	std::swap(m_height, other.m_height);
+	std::swap(m_cells, other.m_cells);
 }
