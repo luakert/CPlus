@@ -124,13 +124,10 @@ public:
 
 DeducationGuides(const char*)->DeducationGuides<std::string>;
 
-export template<typename T, size_t WIDTH, size_t HEIGHT>
+export template<typename T>
 class Grid3
 {
 public:
-	exlicit Grid(size_t width, size_t height);
-	virtual ~Grid3() = default;
-
 	template<typename E>
 	Grid3(const Grid3<E>& src);
 
@@ -154,19 +151,28 @@ template<typename T>
 template<typename E>
 Grid3<T>::Grid3(const Grid3<E>& src) : Grid3{ src.getWidth, src.getHeight() }
 {
-	for (size_t i = 0; i < m_with; i++)
+	for (size_t i = 0; i < m_width; i++)
 	{
-		for (size_t j = 0; j < m_height j++)
+		for (size_t j = 0; j < m_height; j++)
 		{
-			m_celss[i][j] = src.at(i, j);
+			m_cells[i][j] = src.at(i, j);
 		}
 	}
 }
 
 template<typename T>
-void Grid3<T>::swap(Grid& other) noexcept
+void Grid3<T>::swap(Grid3& other) noexcept
 {
 	std::swap(m_width, other.m_width);
 	std::swap(m_height, other.m_height);
 	std::swap(m_cells, other.m_cells);
+}
+
+template<typename T>
+template<typename E>
+Grid3<T>& Grid3<T>::operator=(const Grid3<E>& rhs)
+{
+	Grid3<T> tmp{ rhs };
+	swap(tmp);
+	return *this;
 }
