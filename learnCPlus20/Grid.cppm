@@ -122,7 +122,7 @@ public:
 		T m_content;
 };
 
-DeducationGuides(const char*)->DeducationGuides<std::string>;
+explicit DeducationGuides(const char*)->DeducationGuides<std::string>;
 
 export template<typename T>
 class Grid3
@@ -176,3 +176,24 @@ Grid3<T>& Grid3<T>::operator=(const Grid3<E>& rhs)
 	swap(tmp);
 	return *this;
 }
+
+export template<typename T>
+class GameBoard :public Grid<T>
+{
+public:
+	explicit GameBoard(size_t width = Grid<T>::DefaultWidth, size_t height = Grid<T>::DefaultHeight);
+	void move(size_t xSrc, size_t ySrc, size_t xDest, size_t yDest);
+};
+
+template <typename T>
+GameBoard<T>::GameBoard(size_t width, size_t height): Grid<T>{width, height}{}
+
+template<typename T>
+void GameBoard<T>::move(size_t xSrc, size_t ySrc, rsize_t xDest, size_t yDest)
+{
+	Grid<T>::at(xDest, yDest) = std::move(Grid<T>::at(xSrc, ySrc));
+	Grid<T>::at(xSrc, ySrc).reset();
+}
+
+
+
