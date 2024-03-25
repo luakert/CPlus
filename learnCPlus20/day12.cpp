@@ -123,8 +123,9 @@ bool AreEqe(T x, T y, int precision = 2)
 		fabs(x - y) < std::numeric_limits<T>::min();
 }
 
-int main()
+int main12()
 {
 	test1204();
 	system("pause");
+	return 0;
 }
