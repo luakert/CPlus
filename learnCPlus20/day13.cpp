@@ -1,6 +1,7 @@
 #include <time.h>
 #include <cstdio>
 import <iostream>;
+import <sstream>;
 import <iomanip>;
 import <locale>;
 import <format>;
@@ -173,11 +174,29 @@ void test1304()
 	cout << mu3 << endl;
 }
 
+void test1305()
+{
+	ostringstream outStream;
+	while (cin)
+	{
+		string nextToken;
+		cout << "next token:";
+		cin >> nextToken;
+		if (!cin || nextToken == "done")
+		{
+			break;
+		}
+		outStream << nextToken << "\t";
+	}
+
+	cout << "The End result is " << outStream.str();
+
+}
 
 int main()
 {
 	//test1302();
-	test1304();
+	test1305();
 	//getReservationData();
 	system("pause");
 }
