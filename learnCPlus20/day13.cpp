@@ -3,6 +3,7 @@
 import <iostream>;
 import <sstream>;
 import <iomanip>;
+import <fstream>;
 import <locale>;
 import <format>;
 
@@ -193,10 +194,62 @@ void test1305()
 
 }
 
+int test1306()
+{
+	ofstream fout{ "test.txt" };
+	if (!fout)
+	{
+		cerr << "Error opening test.out for writing" << endl;
+		return -1;
+	}
+
+	fout << "54321";
+	streampos curPos{ fout.tellp() };
+	if (curPos ==5)
+	{
+		cout << "test passed currently at position 5" << endl;
+	} else {
+		cout << "Test failed Not at position 5" << endl;
+	}
+
+	fout.seekp(2, ios_base::beg);
+	fout << 0;
+	fout.close();
+
+	ifstream fin{ "test.txt" };
+	if (!fin)
+	{
+		cerr << "Error reading form file open " << endl;
+		return -1;
+	}
+
+	int testValue;
+	fin >> testValue;
+	if (fin.fail())
+	{
+		cerr << "Error reading value from file" << endl;
+		return -1;
+	}
+
+	const int exceptedValue{ 54021 };
+	if (exceptedValue == testValue)
+	{
+		cout << format("{} is equal {}", testValue, exceptedValue);
+	}
+	else
+	{
+		cout << "test is fail" << endl;
+		return -1;
+	}
+
+	return 0;
+
+}
+
 int main()
 {
 	//test1302();
-	test1305();
+	test1306();
 	//getReservationData();
 	system("pause");
 }
