@@ -252,5 +252,6 @@ int main()
 	test1306();
 	//getReservationData();
 	system("pause");
+	return 1;
 }
 

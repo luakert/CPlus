@@ -139,6 +139,7 @@
     <ClCompile Include="Employee.cppm" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.cppm" />
+    <ClCompile Include="item31.cpp" />
     <ClCompile Include="Spreadsheet.cpp" />
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />
