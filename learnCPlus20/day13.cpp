@@ -3,11 +3,13 @@
 import <iostream>;
 import <sstream>;
 import <iomanip>;
+import <filesystem>;
 import <fstream>;
 import <locale>;
 import <format>;
 
 using namespace std;
+using namespace std::filesystem;
 void test1301()
 {
 	bool mybool{ true };
@@ -246,10 +248,100 @@ int test1306()
 
 }
 
+bool changeNumber(string_view fileName, int id, string_view newNumber)
+{
+	fstream ioData{ fileName.data() };
+	if (!ioData)
+	{
+		cerr << "Error while opening file" << fileName << endl;
+		return false;
+	}
+
+	while (ioData)
+	{
+		int idread;
+		ioData >> idread;
+		if (!ioData)
+		{
+			break;
+		}
+
+		if (idread == id)
+		{
+			ioData.seekp(ioData.tellg());
+			ioData << " " << newNumber;
+			break;
+		}
+
+		string number;
+		ioData >> number;
+	}
+	return true;
+}
+
+void test1307()
+{
+	std::filesystem::path p1{ R"(.\test.txt)" };
+	ifstream ifs{ p1, ios_base::in};
+	if (!ifs.is_open())
+	{
+		cerr << "open file fail" << p1 << endl;
+	}
+	cout << "filepath = " << p1.string() << endl;
+	cout << "curretn path=" << std::filesystem::current_path() << endl;
+	
+	string temp;
+	while (getline(ifs, temp))
+	{
+		//ifs >> temp;
+		//if (!ifs)
+		//{
+		//	break;
+		//}
+		//cout << temp << endl;
+		cout << temp << endl;
+	}
+	ifs.close();
+}
+
+void printDirectoryStruct(const std::filesystem::path& p)
+{
+	if (!std::filesystem::exists(p))
+	{
+		return;
+	}
+
+	recursive_directory_iterator begin{ p };
+	recursive_directory_iterator end{};
+
+	for (auto iter{begin}; iter!= end; ++iter)
+	{
+		const string spacer2(iter.depth() * 2, '-');
+
+		auto& entry{ *iter };
+		if (std::filesystem::is_regular_file(entry))
+		{
+			cout << format("{}File: {} ({}bytes)", spacer2, entry.path().string(), file_size(entry)) << endl;
+
+		}
+		else if (std::filesystem::is_directory(entry))
+		{
+			cout << format("{} dir:{}", spacer2, entry.path().string()) << endl;
+		}
+	}
+}
+
+void test1308()
+{
+	std::filesystem::path p{ std::filesystem::current_path() };
+	p /= "Debug";
+//	const path path2 = p;
+	printDirectoryStruct(p);
+}
 int main()
 {
 	//test1302();
-	test1306();
+	test1307();
 	//getReservationData();
 	system("pause");
 	return 1;
