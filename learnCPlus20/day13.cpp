@@ -338,7 +338,7 @@ void test1308()
 //	const path path2 = p;
 	printDirectoryStruct(p);
 }
-int main()
+int main13()
 {
 	//test1302();
 	test1307();
