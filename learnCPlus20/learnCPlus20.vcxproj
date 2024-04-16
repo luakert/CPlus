@@ -131,6 +131,7 @@
     <ClCompile Include="day12.cpp" />
     <ClCompile Include="day13.cpp" />
     <ClCompile Include="day14.cpp" />
+    <ClCompile Include="day15.cpp" />
     <ClCompile Include="day2.cpp" />
     <ClCompile Include="day33.cpp" />
     <ClCompile Include="day32.cpp" />
@@ -141,6 +142,9 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.cppm" />
     <ClCompile Include="item31.cpp" />
+    <ClCompile Include="MyArraylementation.cppm" />
+    <ClCompile Include="MyArrayDefinition.cppm" />
+    <ClCompile Include="MyArrayTest.cppm" />
     <ClCompile Include="Spreadsheet.cpp" />
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />

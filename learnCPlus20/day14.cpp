@@ -196,9 +196,10 @@ void test1404()
 	}
 }
 
-int main()
+int main14()
 {
 	test1404();
 	system("pause");
+	return 0;
 }
 
