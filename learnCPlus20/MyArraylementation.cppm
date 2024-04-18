@@ -1,13 +1,8 @@
 module;
 #include <cstddef>
-export module mytestarray:imp;
+export module mytestarray:impv;
 
-import :def;
-import <utility>;
-import <memory>;
-import <stdexcept>;
-import <iostream>;
-import <format>;
+import :defv;
 export template<typename T>
 MyArray<T>::MyArray()
 {

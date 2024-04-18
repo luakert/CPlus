@@ -1,7 +1,7 @@
 module;
 #include<cstddef>
 
-export module mytestarray:def;
+export module mytestarray:defv;
 import <utility>;
 import <memory>;
 import <stdexcept>;

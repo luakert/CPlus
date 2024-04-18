@@ -142,7 +142,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.cppm" />
     <ClCompile Include="item31.cpp" />
-    <ClCompile Include="MyArraylementation.cppm" />
+    <ClCompile Include="MyArraylementation.cpp" />
     <ClCompile Include="MyArrayDefinition.cppm" />
     <ClCompile Include="MyArrayTest.cppm" />
     <ClCompile Include="Spreadsheet.cpp" />
