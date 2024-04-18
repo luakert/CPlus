@@ -1,4 +1,4 @@
-export module mytestarray;
+export module mytestrray;
 
-export import :defv;
-export import :impv;
+//export import :defv;
+//export import :impv;

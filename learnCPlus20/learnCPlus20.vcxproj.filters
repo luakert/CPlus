@@ -123,7 +123,7 @@
     <ClCompile Include="MyArrayDefinition.cppm">
       <Filter>源文件\Day15</Filter>
     </ClCompile>
-    <ClCompile Include="MyArraylementation.cpp">
+    <ClCompile Include="MyArraylementation.cppm">
       <Filter>源文件\Day15</Filter>
     </ClCompile>
     <ClCompile Include="MyArrayTest.cppm">
