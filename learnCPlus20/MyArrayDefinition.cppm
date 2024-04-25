@@ -98,7 +98,7 @@ template<typename T>
 T& MyArray<T>::operator[](size_t x)
 {
 	// TODO: 在此处插入 return 语句
-	//std::cout << std::format("call no-const function") << std::endl;
+	std::cout << std::format("call no-const function") << std::endl;
 	if (x >= m_size)
 	{
 		resize(x + AllocSize);
@@ -110,7 +110,7 @@ template<typename T>
 const T& MyArray<T>::operator[](size_t x) const
 {
 	// TODO: 在此处插入 return 语句
-//	std::cout << std::format("call const function") << std::endl;
+	std::cout << std::format("call const function") << std::endl;
 	if (x >= m_size)
 	{
 		throw std::out_of_range{ "" };

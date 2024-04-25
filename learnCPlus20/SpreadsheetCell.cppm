@@ -15,6 +15,12 @@ public:
 	void setString(std::string_view value);
 	std::string getString() const;
 
+	explicit operator double() const;
+	operator std::string() const;
+
+	operator auto() const { return getValue(); }
+	operator const auto&() const { return getValue(); }
+
 private:
 	std::string doubleToString(double value) const;
 	double stringToDouble(std::string_view value) const;

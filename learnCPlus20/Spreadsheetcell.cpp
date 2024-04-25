@@ -49,3 +49,11 @@ SpreadsheetCell operator+(const SpreadsheetCell& lhs, const SpreadsheetCell& rhs
 {
 	return SpreadsheetCell{ lhs.getValue() + rhs.getValue()};
 }
+
+SpreadsheetCell::operator double() const {
+	return getValue();
+}
+
+SpreadsheetCell::operator std::string() const {
+	return doubleToString(getValue());
+}
