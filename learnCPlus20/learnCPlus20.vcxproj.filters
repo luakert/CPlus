@@ -52,6 +52,9 @@
     <Filter Include="源文件\Day15">
       <UniqueIdentifier>{3a3faecc-669b-4627-a36c-a6fea75b383e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day17">
+      <UniqueIdentifier>{5f3b07ef-36a2-4216-8e6c-fc4ed0c341a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="MyArrayTest.cppm">
       <Filter>源文件\Day15</Filter>
+    </ClCompile>
+    <ClCompile Include="day17.cpp">
+      <Filter>源文件\Day17</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

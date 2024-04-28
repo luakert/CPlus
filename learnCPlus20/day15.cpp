@@ -14,7 +14,7 @@ void printMyArray(const MyArray<int>& myarray)
 	cout << endl;
 }
 
-int main()
+int main15()
 {
 	MyArray<int> my;
 	for (size_t i = 0; i < 10; i++)
@@ -24,4 +24,5 @@ int main()
 
 	printMyArray(my);
 	system("pause");
+	return 0;
 }
