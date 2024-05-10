@@ -204,9 +204,18 @@ void test1707()
 	cout << "Terminating..." << endl;
 }
 
-int main()
+void test1708()
 {
-	test1707();
+	double d{ 5.1415 / 2.3 };
+	cout << format("{:.3}", d) << endl;
+	string str = format("{:.3}", d);
+	cout << str << endl;
+}
+
+int main17()
+{
+	test1708();
 
 	system("pause");
+	return 1;
 }
