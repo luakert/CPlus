@@ -1,8 +1,14 @@
 #include <vector>
+#include <span>
+#include <array>
+#include <list>
 #include <format>
 #include <ranges>
+#include <string_view>
 #include <iostream>
 #include <functional>
+
+import round_robin;
 
 using namespace std;
 
@@ -100,8 +106,133 @@ void test1803()
 	cout << endl;
 }
 
+class Process final
+{
+public:
+	explicit Process(string_view name) :m_name{ move(name) } {};
+	void doWorkDuringTimeSlice() {
+		cout << "Process " << m_name << " work during time slice" << endl;
+	}
+
+	bool operator==(const Process&) const = default;
+
+private:
+	string m_name;
+};
+
+class Scheduler final
+{
+public:
+	explicit Scheduler(const vector<Process>& process)
+	{
+		for (auto& pro : process)
+		{
+			m_processes.add(pro);
+		}
+	}
+
+	void scheduleTimeSlice()
+	{
+		try
+		{
+			m_processes.getNext().doWorkDuringTimeSlice();
+
+		}
+		catch (const out_of_range&)
+		{
+			cerr << " no more process" << endl;
+		}
+	}
+
+	void removeProcess(const Process& process)
+	{
+		m_processes.Remove(process);
+	}
+
+private:
+	RoundRobin<Process> m_processes;
+};
+
+void test1804()
+{
+	vector process{ Process{"1"}, Process{"2"}, Process{"3"} };
+	Scheduler sch{ process };
+	for (size_t i = 0; i < 4; i++)
+	{
+		sch.scheduleTimeSlice();
+	}
+
+	sch.removeProcess(process[1]);
+	cout << " removed second process" << endl;
+
+	for (size_t i = 0; i < 4; i++)
+	{
+		sch.scheduleTimeSlice();
+	}
+}
+
+void test1805()
+{
+	list<string> dict{ "aaa", "bbb" };
+	list<string> words{ "chis", "word" };
+
+	dict.push_back("ean");
+	dict.push_back("new");
+
+	if (!words.empty())
+	{
+		// auto listlastwords{ --cend(words) };
+		auto listlastwords{ cbegin(words) };
+		auto it{ cbegin(dict) };
+		for (; it!= cend(dict);++it)
+		{
+			if (*it > *listlastwords)
+			{
+				break;
+			}
+		}
+
+		dict.splice(it, words);
+	}
+
+	for (const auto& word : dict)
+	{
+		cout << word << endl;
+	}
+}
+
+void printArr(span<const int> values)
+{
+	for (const auto& value: values)
+	{
+		cout << value << " ";
+	}
+	cout << endl;
+}
+
+void test1806()
+{
+	vector v{ 11, 22, 33, 44, 55, 66 };
+	printArr(v);
+
+	span mySpan{ v };
+	printArr(mySpan);
+
+	span subspan(mySpan.subspan(2, 3));
+	printArr(subspan);
+
+	printArr({ v.data() + 2, 3 });
+
+	array<int, 5> arr{ 5, 4, 3, 2, 1 };
+	printArr(arr);
+
+	int carr[]{ 9,8, 7,5 };
+	printArr(carr);
+	printArr({ carr + 2, 2 });
+}
+
 int main()
 {
-	test1803();
+	test1806();
 	system("pause");
 }
