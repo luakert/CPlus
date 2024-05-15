@@ -144,5 +144,8 @@
     <ClCompile Include="round_robin.cppm">
       <Filter>源文件\Day18</Filter>
     </ClCompile>
+    <ClCompile Include="packetbuffer.cppm">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

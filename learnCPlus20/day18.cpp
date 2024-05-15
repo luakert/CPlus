@@ -1,7 +1,9 @@
 #include <vector>
 #include <span>
+#include <format>
 #include <array>
 #include <list>
+#include <stdexcept>
 #include <format>
 #include <ranges>
 #include <string_view>
@@ -9,6 +11,7 @@
 #include <functional>
 
 import round_robin;
+import packet_buffer;
 
 using namespace std;
 
@@ -231,8 +234,110 @@ void test1806()
 	printArr({ carr + 2, 2 });
 }
 
+class IPPacket final
+{
+private:
+	int m_id;
+public:
+	explicit IPPacket(int id) :m_id{id}{}
+
+	int getId() { return m_id; }
+};
+
+void test1807()
+{
+	PacketBuffer<IPPacket> ipackets{ 3 };
+	for (int i = 0; i < 4; i++)
+	{
+		if (!ipackets.bufferPacket(IPPacket{i}))
+		{
+			cout << format("packet {} dropped queue is full", i) << endl;
+
+		}
+	}
+
+	while (true)
+	{
+		try
+		{
+			IPPacket packet{ ipackets.getNextPacket() };
+			cout << "packets id =" << packet.getId() << endl;
+		}
+		catch (const std::out_of_range&)
+		{
+			cout << " queue is empty" << endl;
+			break;
+		}
+	}
+}
+
+class Error final
+{
+private:
+	int m_priority;
+	string m_message;
+public:
+	Error(int priority, string message): m_priority{priority}, m_message {message}{}
+	int getPriority() const { return m_priority; }
+	const string& getErrorMessage() const { return m_message; }
+
+	auto operator<=> (const Error& rhs) const
+	{
+		return getPriority() <=> rhs.getPriority();
+	}
+};
+
+ostream& operator<<(ostream& os, const Error& err)
+{
+	os << format("{} priority {}", err.getPriority(), err.getErrorMessage());
+	return os;
+}
+
+class  ErrorCorrelator final
+{
+private:
+	priority_queue<Error> m_errors;
+public:
+	void addError(const Error& error) { m_errors.push(error); }
+	[[nodiscard]] Error getError()
+	{
+		if (m_errors.empty())
+		{
+			throw out_of_range("No more errors");
+		}
+
+		Error err{ m_errors.top() };
+		m_errors.pop();
+		return err;
+	}
+};
+
+void test1808()
+{
+	ErrorCorrelator	ec;
+	ec.addError(Error{ 3, "unable to read file" });
+	ec.addError(Error{ 1, "unable to open file" });
+	ec.addError(Error{ 10, "unable to all file" });
+
+	while (true)
+	{
+
+		try
+		{
+			Error e{ ec.getError() };
+			cout << e << endl;
+		}
+		catch (const std::out_of_range&)
+		{
+			
+			cout << "Finish processing errors" << endl;
+			break;
+		}
+	}
+}
+
 int main()
 {
-	test1806();
+	test1808();
 	system("pause");
 }
