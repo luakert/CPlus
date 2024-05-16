@@ -449,8 +449,8 @@ private:
 
 void testInject()
 {
-	Logger con("Log.txt");
-	con.setLogLevel(ILogger::LogLevel::Debug);
+    Logger con("Log.txt");
+    con.setLogLevel(ILogger::LogLevel::Debug);
 }
 
 void testFactory()
@@ -513,8 +513,8 @@ void testObserver()
 
 void testDecorator()
 {
-	Paragraph p{ "A party?" };
-	std::cout << BoldParagraph{ p }.getHMTL() << std::endl;
+    Paragraph p{ "A party?" };
+    std::cout << BoldParagraph{ p }.getHMTL() << std::endl;
     std::cout << ItaliParagraph{ BoldParagraph{p } }.getHMTL() << std::endl;
 }
 
@@ -595,7 +595,7 @@ public:
 
 void testChain()
 {
-	Application app{ nullptr };
+    Application app{ nullptr };
     Window window{ &app };
     Shape shape{ &window };
 

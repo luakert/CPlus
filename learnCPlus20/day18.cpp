@@ -1,4 +1,5 @@
 #include <vector>
+#include <map>
 #include <span>
 #include <format>
 #include <array>
@@ -9,6 +10,7 @@
 #include <string_view>
 #include <iostream>
 #include <functional>
+#include <utility>
 
 import round_robin;
 import packet_buffer;
@@ -75,7 +77,7 @@ void test1802()
     // move vector construction
     vector<string> vecstr;
     string tmp(5, 'a');
-//	vector vectthir{ move(tmp) };
+//    vector vectthir{ move(tmp) };
     vecstr.push_back(move(tmp));
     cout << tmp << endl;
     cout << vecstr[0] << endl;
@@ -315,14 +317,13 @@ public:
 
 void test1808()
 {
-    ErrorCorrelator	ec;
+    ErrorCorrelator ec;
     ec.addError(Error{ 3, "unable to read file" });
     ec.addError(Error{ 1, "unable to open file" });
     ec.addError(Error{ 10, "unable to all file" });
 
     while (true)
     {
-
         try
         {
             Error e{ ec.getError() };
@@ -337,8 +338,51 @@ void test1808()
     }
 }
 
+class Data final
+{
+private:
+    int m_value;
+public:
+    explicit Data(int value = 0) : m_value{ value } {}
+    int getValue() const { return m_value; }
+    void setValue(int value) { m_value = value; }
+};
+
+void test1809()
+{
+    map<int, Data> dataMap;
+    auto ret{ dataMap.insert({12, Data(13)}) };
+    if (ret.second)
+    {
+        cout << "insert success" << endl;
+    }
+
+    if (auto ret{ dataMap.insert({12, Data(14)})}; ret.second)
+    {
+        cout << "if insert success" << endl;
+    }
+    else {
+        cout << "if insert fail" << endl;
+    }
+
+    if (auto[iter, result] {dataMap.insert({11, Data(11)})}; result)
+    {
+        cout << "C++17 struct bind insert success " << endl;
+    }
+
+    if (auto ret{dataMap.insert_or_assign(12, Data(12))}; ret.second)
+    {
+        cout << " assign success" << endl;
+    }
+
+    for (const auto&[key, value] : dataMap)
+    {
+        cout << "key =" << key << " value=" << value.getValue() << endl;
+    }
+}
+
 int main()
 {
-    test1808();
+    test1809();
     system("pause");
 }
