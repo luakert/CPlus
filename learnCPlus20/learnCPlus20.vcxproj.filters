@@ -147,5 +147,11 @@
     <ClCompile Include="packetbuffer.cppm">
       <Filter>源文件\Day18</Filter>
     </ClCompile>
+    <ClCompile Include="BankAccount.cppm">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
+    <ClCompile Include="BankDB.cpp">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

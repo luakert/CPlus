@@ -14,6 +14,7 @@
 
 import round_robin;
 import packet_buffer;
+import bankaccount;
 
 using namespace std;
 
@@ -331,7 +332,6 @@ void test1808()
         }
         catch (const std::out_of_range&)
         {
-            
             cout << "Finish processing errors" << endl;
             break;
         }
@@ -379,10 +379,74 @@ void test1809()
     {
         cout << "key =" << key << " value=" << value.getValue() << endl;
     }
+    
+    dataMap[1] = Data{ 1 };
+
+    auto it{ dataMap.find(1) };
+    if (it != end(dataMap))
+    {
+        cout << it->second.getValue() << endl;
+    }
+
+    dataMap[2] = Data{ 2 };
+    cout << format("there is {}elements with key 1", dataMap.count(1)) << endl;
+
+    if (dataMap.count(2) != 0)
+    {
+        dataMap.erase(2);
+        cout << format("there is {} key 2", dataMap.count(2)) << endl;
+    }
+
+    map<int, Data> dataMap2;
+//    auto node{ dataMap.extract(1) };
+//    dataMap2.insert(move(node));
+    dataMap2.insert(dataMap.extract(1));
+    for (const auto&[key, value] : dataMap2)
+    {
+        cout << format("dataMap2  key={}, value={}", key, value.getValue()) << endl;
+    }
+    cout << "after extract, dataMap contains  key 1 count=" << dataMap.count(1) << endl;
+
+    map<int, int> src{ {1, 11}, {2, 22} };
+    map<int, int> dest{ {2, 23}, {3, 33}, {4, 44}, {5, 55}};
+    dest.merge(src);
+    for (const auto&[key, value] : dest)
+    {
+        cout << format("dest key={}, value={}", key, value) << endl;
+    }
+
+    for (const auto&[key, value] : src)
+    {
+        cout << format("src key={}, value={}", key, value) << endl;
+    }
+}
+
+void test1810()
+{
+    BankDB db;
+    db.addAccount(BankAccount{ 100, "dav" });
+    db.addAccount(BankAccount{ 200, "json" });
+
+    try
+    {
+        auto& ret{ db.findAccount(100) };
+        cout << "Found account 100" << endl;
+
+        ret.setClientName("dav modfiy");
+
+        auto& ret2{ db.findAccount("json") };
+        cout << "Found account of json" << endl;
+
+        auto& ret3{ db.findAccount(101) };
+    }
+    catch (const out_of_range& outofRange)
+    {
+        cout << "unable to find account " << outofRange.what() << endl;
+    }
 }
 
 int main()
 {
-    test1809();
+    test1810();
     system("pause");
 }
