@@ -3,7 +3,6 @@ module bankaccount;
 // import <utility>;
 //import <stdexcept>;
 
-
 bool BankDB::addAccount(const BankAccount& account)
 {
     auto ret{ m_accounts.emplace(account.getAccountNumber(), account) };

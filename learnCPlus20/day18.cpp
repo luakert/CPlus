@@ -15,6 +15,7 @@
 import round_robin;
 import packet_buffer;
 import bankaccount;
+import buddy_list;
 
 using namespace std;
 
@@ -445,8 +446,30 @@ void test1810()
     }
 }
 
+void test1811()
+{
+    BuddyList buddylist;
+    buddylist.addBuddy("Harry", "Ron");
+    buddylist.addBuddy("Harry", "Hermione");
+    buddylist.addBuddy("Harry", "Hagrid");
+    buddylist.addBuddy("Harry", "Drace");
+
+    buddylist.removeBuddy("Harry", "Drace");
+    
+    buddylist.addBuddy("Hagrid", "Harry");
+    buddylist.addBuddy("Hagrid", "Ron");
+    buddylist.addBuddy("Hagrid", "Hermione");
+
+    auto harryFriends{ buddylist.getBuddies("Harry") };
+
+    for (const auto& frined : harryFriends)
+    {
+        cout << " \t " << frined << endl;
+    }
+}
+
 int main()
 {
-    test1810();
+    test1811();
     system("pause");
 }
