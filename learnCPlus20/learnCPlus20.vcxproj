@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccessList.cppm" />
     <ClCompile Include="BankAccount.cppm" />
     <ClCompile Include="BankDB.cpp" />
     <ClCompile Include="BuddyList.cpp" />

@@ -159,5 +159,8 @@
     <ClCompile Include="BuddyList.cpp">
       <Filter>源文件\Day18</Filter>
     </ClCompile>
+    <ClCompile Include="AccessList.cppm">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

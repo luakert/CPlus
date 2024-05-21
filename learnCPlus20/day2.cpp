@@ -77,7 +77,7 @@ void testConversion()
 
     double value2;
     auto [prt3, error3] {from_chars(out3.data(), out3.data() + out.size(), value2)};
-    if (error3 == errc()) {
+    if (error3 == errc{}) {
         if (value2 == valuedouble)
         {
             cout << "roundtrip" << endl;
@@ -152,12 +152,12 @@ void testShareAlias()
     cout << "foo =" << foo->m_value << " alias=" << *alias<< endl;
 }
 
-int main3()
+int main22()
 {
-    // testConversion();
+    //testConversion();
     // testString_View();
     // test06();
-    testShareAlias();
+   // testShareAlias();
     system("pause");
     return 1;
 }
