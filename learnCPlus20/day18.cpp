@@ -16,6 +16,7 @@ import round_robin;
 import packet_buffer;
 import bankaccount;
 import buddy_list;
+import access_list;
 
 using namespace std;
 
@@ -468,8 +469,32 @@ void test1811()
     }
 }
 
+void test1812()
+{
+    AccessList fileX{ "ab", "bc" };
+    fileX.addUser("psv");
+    fileX.removeUser("bc");
+
+    if (fileX.isAllowed("ab"))
+    {
+        cout << "a has permission" << endl;
+    }
+
+    if (fileX.isAllowed("bc"))
+    {
+        cout << "b has permission" << endl;
+    }
+
+    auto users{ fileX.getAllUser() };
+    for (const auto& value : users)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+}
+
 int main()
 {
-    test1811();
+    test1812();
     system("pause");
 }

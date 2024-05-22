@@ -24,7 +24,7 @@ public:
         m_allowed.erase(user);
     }
 
-    bool isAllowed(std::string& user) const
+    bool isAllowed(const std::string& user) const
     {
         return (m_allowed.count(user) != 0);
     }
