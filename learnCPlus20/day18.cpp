@@ -10,7 +10,9 @@
 #include <string_view>
 #include <iostream>
 #include <functional>
+#include <bitset>
 #include <utility>
+
 
 import round_robin;
 import packet_buffer;
@@ -493,8 +495,32 @@ void test1812()
     cout << endl;
 }
 
+void test1813()
+{
+    bitset<10> myBitSet;
+    myBitSet.set(3);
+    cout << myBitSet << endl;
+    myBitSet.set(6);
+    cout << myBitSet << endl;
+    cout << myBitSet.count() << endl;
+    myBitSet.flip(6);
+    cout << myBitSet << endl;
+
+    if (myBitSet.test(3))
+    {
+        cout << "bitset 3 is set" << endl;
+    }
+
+    auto str1{ "001100100" };
+    auto str2{ "0000101001" };
+    bitset<10> bisetone{ str1 };
+    bitset<10> bisettwo{ str2 };
+    auto bitresult{ bisetone & bisettwo };
+    cout << bitresult << endl;
+}
+
 int main()
 {
-    test1812();
+    test1813();
     system("pause");
 }
