@@ -162,5 +162,11 @@
     <ClCompile Include="AccessList.cppm">
       <Filter>源文件\Day18</Filter>
     </ClCompile>
+    <ClCompile Include="CableCompany.cppm">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
+    <ClCompile Include="CableCompany.cpp">
+      <Filter>源文件\Day18</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

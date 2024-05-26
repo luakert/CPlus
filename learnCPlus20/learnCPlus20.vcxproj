@@ -129,6 +129,8 @@
     <ClCompile Include="BankDB.cpp" />
     <ClCompile Include="BuddyList.cpp" />
     <ClCompile Include="BuddyList.cppm" />
+    <ClCompile Include="CableCompany.cpp" />
+    <ClCompile Include="CableCompany.cppm" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="database.cppm" />
     <ClCompile Include="day1.cpp" />

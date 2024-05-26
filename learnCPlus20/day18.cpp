@@ -19,6 +19,7 @@ import packet_buffer;
 import bankaccount;
 import buddy_list;
 import access_list;
+import cable_company;
 
 using namespace std;
 
@@ -519,8 +520,19 @@ void test1813()
     cout << bitresult << endl;
 }
 
+void test1814()
+{
+    CableCompany mycc;
+    mycc.addPackages("basic", "111100000");
+    mycc.addPackages("premium", "1111111111");
+    mycc.addPackages("sprt", "000100111");
+
+    mycc.newCustomer("Marc", "basic");
+    mycc.addPackageToCustomer("Marc", "sprt");
+    cout << mycc.getCustomerChannels("Marc") << endl;
+}
 int main()
 {
-    test1813();
+    test1814();
     system("pause");
 }

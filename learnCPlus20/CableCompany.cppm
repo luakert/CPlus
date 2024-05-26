@@ -3,12 +3,13 @@ import <map>;
 import <string>;
 import <string_view>;
 import <bitset>;
+import <stdexcept>;
 
 export class CableCompany final
 {
 public:
     static const size_t NumChannels{ 10 };
-    void addPackages(std::string_view packageName, const std::bitset<NumChannels> channels);
+    void addPackages(std::string_view packageName, const std::bitset<NumChannels>& channels);
     void addPackages(std::string_view packagName, std::string_view channels);
 
     void removePackages(std::string_view packageName);
@@ -23,10 +24,9 @@ public:
     void removeChannel(std::string_view name, int channel);
     
     void addPackageToCustomer(std::string_view  name, std::string_view package);
-    void  deleteCustomer(std::string_view name);
+    void deleteCustomer(std::string_view name);
 
-    const std::bitset<NumChannels>& getCustomerChannels(std::string_view name);
-
+    const std::bitset<NumChannels>& getCustomerChannels(std::string_view name) const;
 
 private :
     std::bitset<NumChannels>& getCustomerChannelsHelper(std::string_view name);
