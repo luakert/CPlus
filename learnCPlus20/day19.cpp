@@ -1,7 +1,8 @@
 #include <iostream>
-#include <unorder_set>
+#include <unordered_set>
 #include <span>
 #include <format>
+#include <functional>
 #include <string_view>
 #include <vector>
 #include <cmath>
@@ -106,8 +107,86 @@ void test1904()
     auto res1{ mySet.find("Kye") };
 }
 
+void func(int number, string_view sv)
+{
+    cout << format("func({}, {})", number, sv) << endl;
+}
+
+void increment(int& value)
+{
+    ++value;
+}
+
+void overloaded(int value) { cout << "int par " << value << endl; }
+void overloaded(double value) { cout << "double par" << value << endl; }
+
+class Handler
+{
+public:
+    void handleMatch(size_t position, int vlaue, int value2)
+    {
+        cout << format("Match found at position {} ({}, {})", position, vlaue, value2) << endl;
+    }
+};
+
+template<typename Matcher>
+void printMatchString(const vector<string>& strings, Matcher matcher)
+{
+    for (const auto& str : strings)
+    {
+        if (matcher(str))
+        {
+            cout << str << "+=";
+        }
+    }
+    cout << endl;
+}
+
+void test1905()
+{
+    string myString{ "abc" };
+    auto f1{ bind(func, placeholders::_1, myString) };
+    f1(16);
+
+    auto f2{ bind(func, placeholders::_2, placeholders::_1) };
+    f2("Test", 12);
+
+    int index{ 0 };
+    increment(index);
+    cout << "after increment value=" << index << endl;
+
+    auto incr{ bind(increment, index) };
+    incr();
+    cout << "after bind increment value=" << index << endl;
+
+    auto incrref{ bind(increment, ref(index)) };
+    incrref();
+    cout << "after ref increment value=" << index << endl;
+
+    auto f4{ bind((void(*)(double))overloaded, placeholders::_1) };
+    f4(1.1f);
+
+    auto f5{ bind((void(*)(int))overloaded, placeholders::_1) };
+    f5(12);
+
+    Handler handler;
+    vector v1{ 2, 500, 6, 100, 101 };
+    vector v2{ 102, 501, 6, 99, 101 };
+    findMatcher(v1, v2, intEqual, bind(&Handler::handleMatch, &handler, placeholders::_1, placeholders::_2,
+        placeholders::_3));
+
+    auto  greaterEqualTo100{ bind(greater_equal<>{}, placeholders::_1, 100) };
+   // auto result22 = greaterEqualTo100(103);
+   // cout << typeid(result22).raw_name() << endl;
+    findMatcher(v1, v2, greaterEqualTo100, printMatch);
+
+    vector<string> vecstr{ "Hello", "", "", "world", " ", " this test" };
+    // printMatchString(vecstr, not_fn(mem_fn(&string::empty)));
+    printMatchString(vecstr,(mem_fn(&string::empty)));
+}
+
 int main()
 {
-    test1903();
+    test1905();
     system("pause");
 }
