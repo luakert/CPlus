@@ -531,8 +531,9 @@ void test1814()
     mycc.addPackageToCustomer("Marc", "sprt");
     cout << mycc.getCustomerChannels("Marc") << endl;
 }
-int main()
+int main18()
 {
     test1814();
     system("pause");
+    return 0;
 }
