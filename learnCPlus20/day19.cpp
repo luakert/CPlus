@@ -185,6 +185,11 @@ void test1905()
     printMatchString(vecstr,(mem_fn(&string::empty)));
 }
 
+void printMessage(string_view message)
+{
+    cout << message << endl;
+}
+
 // lambda
 void test1906()
 {
@@ -210,20 +215,43 @@ void test1906()
         {
             using V = decay_t<decltype(values)>;
             using T = typename V::value_type;
-            T someValue{};
+           // T someValue{};
            // T::some_static_function{};
            // T::size{};
+            for (const T& va : values)
+            {
+                cout << va << endl;
+            }
         }
     };
 
-    // vector v3{ 1, 3, 4 };
-   // myTemplate(v3);
+    auto myAutoLambda{ [] <typename T>(const vector<T>& vec) {
+        cout << "auto typeanme" << endl;
+        for (const T& t : vec)
+        {
+            cout << t << endl;
+        }
+    } };
 
-   // vector<string> v4{ "hello", "world" };
-    //myTemplate(v4);
+     vector v3{ 1, 3, 4 };
+     myTemplate(v3);
+
+    vector<string> v4{ "hello", "world" };
+    myTemplate(v4);
+
+    myAutoLambda(v4);
 
     //myTemplate("string");
-    auto myTemplateLambda{ [] <typename T>(const T& v1, const T& v2) requires integral<T> {}};
+    auto myTemplateLambda{ [] <typename T>(const T & v1, const T & v2) requires integral<T>
+        { cout << v1 + v2 << endl; }
+    };
+
+    myTemplateLambda(1, 34);
+
+    invoke(printMessage, "hello invoke");
+    invoke([](const auto& msg) {cout << msg << endl; }, "hello voke lambda");
+    string msg{ "hello invoke" };
+    cout << invoke(&string::size, msg) << endl;
 }
 
 int main()
