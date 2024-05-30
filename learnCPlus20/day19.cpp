@@ -185,8 +185,49 @@ void test1905()
     printMatchString(vecstr,(mem_fn(&string::empty)));
 }
 
+// lambda
+void test1906()
+{
+    vector v1{ 2, 4, 5,6,9 , 10 };
+    vector v2{ 4, 4, 2,9,0 , 10 };
+
+    findMatcher(v1, v2, [](int va1, int va2) {return va1 == va2; }, printMatch);
+    cout << " par use by auto" << endl;
+
+    auto areEqual{ [](const auto& va1, const auto& va2) {return va1 == va2; } };
+    findMatcher(v1, v2, areEqual, printMatch);
+
+    double pi{ 3.1415 };
+    auto myLambda{ [myCap = "Pi:", pi] {cout << myCap << pi << endl; } };
+    myLambda();
+
+    auto myPtr{ make_unique<double>(3.534) };
+    auto myMoveLambda{ [p = move(myPtr)] {cout << "move lambda p value:" << *p; } };
+    myMoveLambda();
+    cout << endl;
+    auto myTemplate{
+        [](const auto& values)
+        {
+            using V = decay_t<decltype(values)>;
+            using T = typename V::value_type;
+            T someValue{};
+           // T::some_static_function{};
+           // T::size{};
+        }
+    };
+
+    // vector v3{ 1, 3, 4 };
+   // myTemplate(v3);
+
+   // vector<string> v4{ "hello", "world" };
+    //myTemplate(v4);
+
+    //myTemplate("string");
+    auto myTemplateLambda{ [] <typename T>(const T& v1, const T& v2) requires integral<T> {}};
+}
+
 int main()
 {
-    test1905();
+    test1906();
     system("pause");
 }
