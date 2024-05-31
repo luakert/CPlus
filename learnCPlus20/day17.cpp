@@ -136,7 +136,7 @@ private:
 void test1705()
 {
     vector persons{ PersonTest {"zavid", "jax"}, PersonTest{"john", "steve"} };
-    std:; ranges::sort(persons, {}, &PersonTest::getFirstName);
+    std::ranges::sort(persons, {}, &PersonTest::getFirstName);
     // myPrint(cbegin(persons), cend(persons));
     for (auto iter = cbegin(persons); iter != cend(persons); ++iter)
     {

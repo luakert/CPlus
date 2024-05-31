@@ -215,9 +215,6 @@ void test1906()
         {
             using V = decay_t<decltype(values)>;
             using T = typename V::value_type;
-           // T someValue{};
-           // T::some_static_function{};
-           // T::size{};
             for (const T& va : values)
             {
                 cout << va << endl;
@@ -231,7 +228,8 @@ void test1906()
         {
             cout << t << endl;
         }
-    } };
+        }
+    };
 
      vector v3{ 1, 3, 4 };
      myTemplate(v3);
@@ -254,8 +252,9 @@ void test1906()
     cout << invoke(&string::size, msg) << endl;
 }
 
-int main()
+int main19()
 {
     test1906();
     system("pause");
+    return 0;
 }
