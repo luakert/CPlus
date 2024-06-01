@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <numeric>
 #include <vector>
 
 using namespace std;
@@ -116,8 +117,108 @@ void test2004()
     isPerfect(1);
 }
 
+template<typename container>
+void populateContainer(container& con)
+{
+    while (true)
+    {
+        cout << "Enter number ";
+        int number;
+        cin >> number;
+        if (number == 0)
+        {
+            break;
+        }
+        con.push_back(number);
+    }
+}
+
+void test2005()
+{
+    vector vec{ 6, 5, 4, 4, 7, 2, 9 };
+    auto beginIter{ begin(vec) };
+    auto endIter{ end(vec) };
+
+    auto it{ find_if_not(beginIter, endIter, [](int a) {return a < 8;}) };
+    if (it != endIter)
+    {
+        cout << "First element not < 8 is " << *it << endl;
+    }
+
+    it = adjacent_find(beginIter, endIter);
+    if (it != endIter)
+    {
+        cout << "Found tow consecutive equal elements with value" << *it << endl;
+    }
+
+    vector targets{ 4, 7 };
+    it = find_first_of(beginIter, endIter, cbegin(targets), cend(targets));
+    if (it != endIter)
+    {
+        cout << "Found one of 4, or 7 " << *it << endl;
+    }
+
+    vector sub{ 2, 9 };
+    it = search(beginIter, endIter, cbegin(sub), cend(sub));
+    if (it != endIter)
+    {
+        cout << "Found sub 2, 9" << endl;
+    }
+    else {
+        cout << "unable to find sub 2,9" << endl;
+    }
+
+    it = search_n(beginIter, endIter, 2, 8);
+    if (it != endIter)
+    {
+        cout << "Found two 8 " << endl;
+    }
+    else
+    {
+        cout << "unable to find two 8" << endl;
+    }
+}
+
+void test2006()
+{
+    vector<int> vec(10);
+    int value{ 1 };
+    generate(begin(vec), end(vec), [&value] { value *= 2; return value; });
+    for (auto val : vec)
+    {
+
+        cout << val << " ";
+    }
+    cout << endl;
+
+    vector<int> myVec;
+    populateContainer(myVec);
+    for (const auto& value: myVec)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    transform(begin(myVec), end(myVec), begin(myVec), [](int i) {return i + 100; });
+    for (const auto& value : myVec)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    vector<int> vec2, vec3;
+    populateContainer(vec2);
+    vec3.resize(vec2.size());
+
+    copy(cbegin(vec2), cend(vec2), begin(vec3));
+    for (const auto& value : vec3)
+    {
+        cout << value << endl;
+    }
+}
+
 int main()
 {
-    test2004();
+    test2006();
     system("pause");
 }
