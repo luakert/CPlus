@@ -2,6 +2,7 @@
 #include <iostream>
 #include <numeric>
 #include <vector>
+#include <utility>
 
 using namespace std;
 
@@ -215,6 +216,51 @@ void test2006()
     {
         cout << value << endl;
     }
+
+    vector<int> vec4;
+    size_t tally{ 0 };
+    cout << "Enter number of  elements  copy ";
+    cin >> tally;
+    tally = min(tally, vec2.size());
+    vec4.resize(tally);
+    copy_n(begin(vec2), tally, begin(vec4));
+    for (auto& val:vec4)
+    {
+        cout << val << " ";
+    }
+    cout << endl;
+}
+
+class MyCopyTestClass
+{
+private:
+    string m_str;
+public:
+    MyCopyTestClass() = default;
+    MyCopyTestClass(const MyCopyTestClass& src) = default;
+    MMyCopyTestClass(string str):m_str(str){}
+    virtual ~MyCopyTestClass() = default;
+
+    MyCopyTestClass& operator=(MyCopyTestClass&& rhs)noexcept {
+        if (this == &rhs)
+        {
+            return *this;
+        }
+
+        m_str == move(rhs.m_str);
+        cout << "move operator= " << m_str << endl;
+        return *this;
+    }
+
+    void setString(string str) { m_str = move(str); }
+    const string& getString() { return m_str; }
+};
+
+void test2007()
+{
+    vector<MyCopyTestClass> vecstr{ MyCopyTestClass{"a"}, MyCopyTestClass{"b"},MyCopyTestClass("C") }
+
+
 }
 
 int main()
