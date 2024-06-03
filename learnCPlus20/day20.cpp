@@ -238,7 +238,7 @@ private:
 public:
     MyCopyTestClass() = default;
     MyCopyTestClass(const MyCopyTestClass& src) = default;
-    MMyCopyTestClass(string str):m_str(str){}
+    MyCopyTestClass(string str):m_str(move(str)){}
     virtual ~MyCopyTestClass() = default;
 
     MyCopyTestClass& operator=(MyCopyTestClass&& rhs)noexcept {
@@ -247,24 +247,38 @@ public:
             return *this;
         }
 
-        m_str == move(rhs.m_str);
+        m_str = move(rhs.m_str);
         cout << "move operator= " << m_str << endl;
         return *this;
     }
 
     void setString(string str) { m_str = move(str); }
-    const string& getString() { return m_str; }
+    const string& getString() const { return m_str; }
 };
 
 void test2007()
 {
-    vector<MyCopyTestClass> vecstr{ MyCopyTestClass{"a"}, MyCopyTestClass{"b"},MyCopyTestClass("C") }
+    vector<MyCopyTestClass> vecstr{ MyCopyTestClass{"a"}, MyCopyTestClass{"b"},MyCopyTestClass("C") };
+    vector<MyCopyTestClass> vecDest(vecstr.size());
+    move(begin(vecstr), end(vecstr), begin(vecDest));
+    for (const auto& val : vecDest)
+    {
+        cout << val.getString() << " ";
+    }
+    cout << endl;
+
 
 
 }
 
+void removeElements(vector<string>& strings)
+{
+    auto it{ remove(begin(strings), end(strings), "") };
+    strings.erase(it, end(strings));
+}
+
 int main()
 {
-    test2006();
+    test2007();
     system("pause");
 }
