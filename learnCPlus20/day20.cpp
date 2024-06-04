@@ -1,7 +1,10 @@
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <random>
+#include <time.h>
 #include <vector>
+#include <map>
 #include <utility>
 
 using namespace std;
@@ -266,9 +269,6 @@ void test2007()
         cout << val.getString() << " ";
     }
     cout << endl;
-
-
-
 }
 
 void removeElements(vector<string>& strings)
@@ -277,8 +277,145 @@ void removeElements(vector<string>& strings)
     strings.erase(it, end(strings));
 }
 
+void test2008()
+{
+    map<int, int> myMap{ {4, 10}, {5,12}, {1,5} };
+    for_each(cbegin(myMap), cend(myMap), [](const auto& p) {
+        cout << p.first << "->" << p.second << endl;
+        });
+
+    vector<int> myVec;
+    populateContainer(myVec);
+
+    int sum{ 0 };
+    int product{ 1 };
+    for_each(cbegin(myVec), cend(myVec), [&sum, &product](int val) {
+        sum += val;
+        product *= val;
+
+    });
+
+    cout << " sum=" << sum << endl;
+    cout << "product =" << product << endl;
+}
+
+class SumAndProduct
+{
+private:
+    int m_sum{ 0 };
+    int m_product{ 1 };
+public:
+    void operator()(int value)
+    {
+        m_sum += value;
+        m_product *= value;
+    }
+
+    int getSum() const { return m_sum; }
+    int getProduct() const { return m_product; }
+};
+
+void test2009()
+{
+    vector<int> myVec;
+    populateContainer(myVec);
+
+    SumAndProduct sap;
+    sap = for_each(cbegin(myVec), cend(myVec), sap);
+    cout << " sum =" << sap.getSum() << endl;
+    cout << " product=" << sap.getProduct() << endl;
+}
+
+void test2010()
+{
+    vector<int> vec1;
+    vector<int> vecOdd;
+    vector<int> vecEven;
+
+    populateContainer(vec1);
+    vecOdd.resize(vec1.size());
+    vecEven.resize(vec1.size());
+
+    auto pairIter{ partition_copy(cbegin(vec1), cend(vec1), begin(vecEven), begin(vecOdd),[](int value) {
+            return value % 2 == 0;
+    }) };
+
+    vecOdd.erase(pairIter.second, end(vecOdd));
+    vecEven.erase(pairIter.first, end(vecEven));
+
+    cout << "Evnt number" << endl;
+    for (const auto& evenValue: vecEven)
+    {
+        cout << evenValue << " ";
+    }
+    cout << endl;
+
+    cout << "Odd number" << endl;
+    for (const auto& evenValue: vecOdd)
+    {
+        cout << evenValue << " ";
+    }
+    cout << endl;
+
+    partition(begin(vec1), end(vec1), [](int value)
+        {
+            return value % 2 == 0;
+        }
+    );
+
+    for (const auto& value : vec1)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+}
+
+void test2011()
+{
+    vector<int> myVec;
+    populateContainer(myVec);
+    sort(begin(myVec), end(myVec), greater<>());
+    for (const auto& value : myVec)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+   // random_device seeder;
+   // // time t{ time(nullptr) };
+   // const auto seed{ seeder.entropy() ? seeder() : (unsigned  int)time(nullptr)};
+   // default_random_engine engine{ static_cast<default_random_engine::result_type>(seed) };
+   // shuffle(begin(myVec), end(myVec), engine);
+
+    vector<int> vec2;
+    populateContainer(vec2);
+    nth_element(begin(vec2), begin(vec2) + 2, end(vec2), greater<>());
+    cout << vec2[2] << endl;  
+
+    for (const auto& value : vec2)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+}
+
+void test2012()
+{
+    vector<int> myVec;
+    populateContainer(myVec);
+
+    nth_element(begin(myVec), begin(myVec) + 5, end(myVec), greater<>());
+    for (const auto& value : myVec)
+    {
+        cout << value << " ";
+    }
+    cout << endl;
+
+    sort(begin(myVec), begin(myVec) + 5);
+    for_each_n(begin(myVec), 5, [](const auto& ele) {cout << ele << " "; });
+}
 int main()
 {
-    test2007();
+    test2012();
     system("pause");
 }
