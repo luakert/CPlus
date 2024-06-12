@@ -162,6 +162,7 @@
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
+    <ClCompile Include="testunseq.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -180,5 +180,8 @@
     <ClCompile Include="day20.cpp">
       <Filter>源文件\Day20</Filter>
     </ClCompile>
+    <ClCompile Include="testunseq.cpp">
+      <Filter>源文件\Day20</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

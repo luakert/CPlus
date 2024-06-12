@@ -5,6 +5,7 @@
 #include <time.h>
 #include <vector>
 #include <map>
+#include <execution>
 #include <utility>
 
 using namespace std;
@@ -381,9 +382,9 @@ void test2011()
     }
     cout << endl;
 
-   // random_device seeder;
+    //random_device seeder;
    // // time t{ time(nullptr) };
-   // const auto seed{ seeder.entropy() ? seeder() : (unsigned  int)time(nullptr)};
+//    const auto seed{ seeder.entropy() ? seeder() : time(nullptr)};
    // default_random_engine engine{ static_cast<default_random_engine::result_type>(seed) };
    // shuffle(begin(myVec), end(myVec), engine);
 
@@ -414,8 +415,28 @@ void test2012()
     sort(begin(myVec), begin(myVec) + 5);
     for_each_n(begin(myVec), 5, [](const auto& ele) {cout << ele << " "; });
 }
-int main()
+
+void test2013()
 {
-    test2012();
+    vector vec{ 1, 4, 2,5, 6,0 };
+    sort(execution::par, begin(vec), end(vec));
+    for (const auto& va : vec)
+    {
+        cout << va << " ";
+    }
+    cout << endl;
+
+    vector<int> vec1(1000);
+    vector<int> vec2(1000);
+
+    iota(begin(vec1), end(vec1), 1);
+    vec2 = vec1;
+
+}
+
+int main20()
+{
+    test2013();
     system("pause");
+    return 0;
 }
