@@ -183,8 +183,25 @@ void test2109()
     }
 }
 
-int main()
+void test2120()
 {
-    test2109();
+    regex r{ R"(^(.*?)//.*$)" };
+    const string replacement{ "$1" };
+    while (true)
+    {
+        cout << "enter code:";
+        string str;
+        if (!getline(cin, str, '@'))
+        {
+            break;
+        }
+        cout << regex_replace(str, r, replacement) << endl;
+    }
+}
+
+int main21()
+{
+    test2120();
     system("pause");
+    return 0;
 }

@@ -67,6 +67,9 @@
     <Filter Include="源文件\Day21">
       <UniqueIdentifier>{c74083e5-0031-419d-b010-c2cec1d84c0e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day22">
+      <UniqueIdentifier>{acb3268f-554b-49f6-957c-aa7d4792ada7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -188,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="day21.cpp">
       <Filter>源文件\Day21</Filter>
+    </ClCompile>
+    <ClCompile Include="day22.cpp">
+      <Filter>源文件\Day22</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
