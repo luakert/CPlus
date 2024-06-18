@@ -100,19 +100,30 @@ void test2203()
     duration<double> d2{ d1 };
     cout << " seconds=" << d2.count() << endl;
 
-    auto today = { floor<days>(system_clock::now()) };
-    // cout << today << endl;
+    auto today { floor<days>(system_clock::now()) };
+    cout << today << endl;
+    year_month_day ymd{ today };
+    cout << ymd.year() << endl;
+    // year_month_day ymd{ today };
+   //  cout << ymd << endl;
+   // using date::operator<<;
+    //cout << int(today.) << endl;
+    // cout << today.year() << endl;
+    // year_month_day ymd = today;
+    // cout << ymd.year() << endl;
 
     system_clock::time_point t1{ sys_days{2020y / June / 22d} };
 
     year_month_day yearmonthday{ floor<days>(t1) };
     year_month_day today2{ floor<days>(system_clock::now()) };
     cout << today2 << endl;
+
 }
 
 
-int main()
+int main22()
 {
     test2203();
     system("pause");
+    return 0;
 }

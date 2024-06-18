@@ -146,6 +146,7 @@
     <ClCompile Include="day20.cpp" />
     <ClCompile Include="day21.cpp" />
     <ClCompile Include="day22.cpp" />
+    <ClCompile Include="day23.cpp" />
     <ClCompile Include="day33.cpp" />
     <ClCompile Include="day32.cpp" />
     <ClCompile Include="day8.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
+    <ClCompile Include="testDay22.cpp" />
     <ClCompile Include="testunseq.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
