@@ -82,7 +82,7 @@ void test2304()
     }
 }
 
-int main()
+int main23()
 {
     test2304();
     system("pause");
