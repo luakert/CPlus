@@ -46,12 +46,12 @@ void test2402()
     cout << "empty has value " << empty.has_value() << endl;
     cout << "anInt has value " << anInt.has_value() << endl;
 
-    int theInt{ static_cast<int>(anInt) };
+    int theInt{ any_cast<int>(anInt) };
     cout << theInt << endl;
 
     try
     {
-        int test{ static_cast<int>(anString) };
+        int test{ any_cast<int>(anString) };
     }
     catch (const bad_any_cast& ex)
     {
@@ -61,12 +61,27 @@ void test2402()
     using MyTuple = tuple<int, string, bool>;
     MyTuple t1{ 16, "Test"s, false };
     cout << format("t1 =({}, {}, {})", get<0>(t1), get<1>(t1), get<2>(t1)) << endl;
+    cout << "type of t1 " << typeid(get<1>(t1)).name() << endl;
 
+    cout << "Tuple size=" << tuple_size<MyTuple>::value << endl;
+
+    cout << "Tuple type=" << typeid(tuple_element<2, MyTuple>::type).name() << endl;
+
+    tuple<int, string, bool> t2 {16, "Test"s, false };
+    auto [i, str1, boolvalue] {t2};
+    cout << " i=" << i << " t2=" << str1 << " boolean=" << boolvalue << endl;
+
+    int a{ 0 };
+    string str;
+    bool b;
+    cout << format("before i ={}, str={}, b=", a, str, b) << endl;
+    tie(a, str, b) = t1;
+    cout << format("After i={}, str={}, b={}", a, str, b) << endl;
 }
 
 int main()
 {
-    test2401();
+    test2402();
     system("pause");
     return 1;
 }
