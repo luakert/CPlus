@@ -79,7 +79,7 @@ void test2402()
     cout << format("After i={}, str={}, b={}", a, str, b) << endl;
 }
 
-int main()
+int main24()
 {
     test2402();
     system("pause");
