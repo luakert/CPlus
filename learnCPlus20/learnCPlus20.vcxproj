@@ -152,8 +152,10 @@
     <ClCompile Include="day32.cpp" />
     <ClCompile Include="day8.cpp" />
     <ClCompile Include="day9.cpp" />
+    <ClCompile Include="directed_graph.cppm" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="Employee.cppm" />
+    <ClCompile Include="graph_node.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.cppm" />
     <ClCompile Include="item31.cpp" />

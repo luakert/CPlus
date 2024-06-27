@@ -76,6 +76,9 @@
     <Filter Include="源文件\Day24">
       <UniqueIdentifier>{9267b46d-e1bf-43ce-b10f-29d0f50e3c5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="源文件\Day25">
+      <UniqueIdentifier>{48f01366-117e-4431-99b1-e89f7ea3faa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day32.cpp">
@@ -209,6 +212,12 @@
     </ClCompile>
     <ClCompile Include="day24.cpp">
       <Filter>源文件\Day24</Filter>
+    </ClCompile>
+    <ClCompile Include="graph_node.cpp">
+      <Filter>源文件\Day25</Filter>
+    </ClCompile>
+    <ClCompile Include="directed_graph.cppm">
+      <Filter>源文件\Day25</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
