@@ -52,7 +52,7 @@ typename directed_graph<T>::nodes_container_type::iterator directed_graph<T>::fi
 }
 
 template<typename T>
-typename directed_graph<T>::nodes_container_type::iterator directed_graph<T>::findNode(const T& node_value)
+typename directed_graph<T>::nodes_container_type::const_iterator directed_graph<T>::findNode(const T& node_value) const
 {
     return const_cast<directed_graph<T>*>(this)->findNode(node_value);
 }
@@ -80,10 +80,10 @@ bool directed_graph<T>::insert(const T& node_value)
 template<typename T>
 bool directed_graph<T>::insert_edge(const T& from_node_value, const T& to_node_value)
 {
-    const auto form{ findNode(from_node_value) };
+    const auto from{ findNode(from_node_value) };
     const auto to{ findNode(to_node_value) };
 
-    if (form == std::end(m_nodes) || to == std:;end(m_nodes))
+    if (from == std::end(m_nodes) || to == std::end(m_nodes))
     {
         return false;
     }
@@ -100,7 +100,7 @@ size_t directed_graph<T>::get_index_of_node(const typename nodes_container_type:
 }
 
 template<typename T>
-void directed_graph<T>::remove_all_link_to(const typename nodes_container_type::const_iterator node_iter)
+void directed_graph<T>::remove_all_link_to(typename nodes_container_type::const_iterator node_iter)
 {
     const size_t node_index{ get_index_of_node(node_iter) };
     for (auto&& node: m_nodes)
@@ -108,7 +108,14 @@ void directed_graph<T>::remove_all_link_to(const typename nodes_container_type::
         auto& adjacencyIndices{ node.get_adjacent_nodes_indices() };
         adjacencyIndices.erase(node_index);
         std::vector<size_t> indices(std::begin(adjacencyIndices), std::end(adjacencyIndices));
-        std::for_each(std:; begin(indices), std::end(indices), [node_index](size_t& index) {if (index > node_index) { --index; }});
+        std::for_each(std:; begin(indices), std::end(indices), 
+            [node_index](size_t& index) {
+                if (index > node_index) 
+                { 
+                    --index; 
+                }
+            }
+        );
         adjacencyIndices.clear();
         adjacencyIndices.insert(std::begin(indices), std::end(indices));
     }
