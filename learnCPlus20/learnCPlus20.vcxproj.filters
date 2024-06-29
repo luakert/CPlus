@@ -219,5 +219,8 @@
     <ClCompile Include="directed_graph.cppm">
       <Filter>源文件\Day25</Filter>
     </ClCompile>
+    <ClCompile Include="day25.cpp">
+      <Filter>源文件\Day25</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

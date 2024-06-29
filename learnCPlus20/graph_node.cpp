@@ -2,7 +2,7 @@ module;
 
 #include <cstdlib>
 
-module directed_graph:node;
+export module directed_graph:node;
 
 import <set>;
 
