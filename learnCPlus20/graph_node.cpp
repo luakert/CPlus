@@ -2,16 +2,18 @@ module;
 
 #include <cstdlib>
 
-export module directed_graph:node;
+export module directed_graph.node;
 
 import <set>;
 
-namespace details
+namespace ProCpp
 {
     template<typename T>
     class directed_graph;
+namespace details
+{
 
-    template<typename T>
+    export template<typename T>
     class graph_node
     {
     private:
@@ -41,7 +43,7 @@ namespace details
     }
 
     template<typename T>
-    graph_node<T>::graph_node(directed_graph<T>* graph, T&&t):m_graph{graph}, m_data{std::move(t)}{}
+    graph_node<T>::graph_node(directed_graph<T>* graph, T&& t) :m_graph{graph}, m_data{std::move(t)} {}
 
     template<typename T>
     T& graph_node<T>::value()noexcept { return m_data; }
@@ -61,4 +63,5 @@ namespace details
         return m_adjacentNodeIndices;
     }
 
+    }
 }
