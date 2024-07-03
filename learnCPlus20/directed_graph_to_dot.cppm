@@ -1,3 +1,4 @@
+
 module;
 
 #include <cstddef>
@@ -7,14 +8,17 @@ export module directed_graph.to_dot;
 import directed_graph;
 import <string>;
 import <string_view>;
-import <iostream>;
 import <sstream>;
 import <format>;
 
+using namespace std;
+
 namespace ProCpp
 {
-    	// Returns a given graph in DOT format.
-	export template <typename T>
+
+	// Returns a given graph in DOT format.
+	export
+	template <typename T>
 	std::wstring to_dot(const directed_graph<T>& graph, std::wstring_view graph_name)
 	{
 		std::wstringstream wss;
@@ -40,4 +44,5 @@ namespace ProCpp
 
 		return wss.str();
 	}
+
 }

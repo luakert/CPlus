@@ -1,67 +1,92 @@
 module;
 
-#include <cstdlib>
+#include <cstddef>
 
 export module directed_graph.node;
 
 import <set>;
 
-namespace ProCpp
-{
-    template<typename T>
-    class directed_graph;
-namespace details
+export namespace ProCpp
 {
 
-    export template<typename T>
-    class graph_node
-    {
-    private:
-        friend class directed_graph<T>;
-        directed_graph<T>* m_graph;
+	// Forward declaration.
+	template<typename T>
+	class directed_graph;
 
-        using adjacency_list_type = std::set<size_t>;
-        [[nodiscard]] adjacency_list_type& get_adjacent_nodes_indices();
-        [[nodiscard]] const adjacency_list_type& get_adjacent_nodes_indices() const;
+	namespace details
+	{
 
-        T m_data;
-        adjacency_list_type m_adjacentNodeIndices;
-    public:
-        graph_node(directed_graph<T>* graph, const T& t);
-        graph_node(directed_graph<T>* graph, T&& t);
+		template<typename T>
+		class graph_node
+		{
+		public:
+			// Constructs a graph_node for the given value.
+			graph_node(directed_graph<T>* graph, const T& t);
+			graph_node(directed_graph<T>* graph, T&& t);
 
-        [[nodiscard]] T& value() noexcept;
-        [[nodiscard]] const T& value() const noexcept;
+			// Returns a reference to the stored value.
+			[[nodiscard]] T& value() noexcept;
+			[[nodiscard]] const T& value() const noexcept;
 
-        bool operator==(const graph_node&) const = default;
-    };
+			// C++20 defaulted operator==.
+			bool operator==(const graph_node&) const = default;
 
-    template<typename T>
-    graph_node<T>::graph_node(directed_graph<T>* graph, const T& t) :m_graph{graph}, m_data{t}
-    {
+		private:
+			friend class directed_graph<T>;
 
-    }
+			// A pointer to the graph this node is in.
+			directed_graph<T>* m_graph;
 
-    template<typename T>
-    graph_node<T>::graph_node(directed_graph<T>* graph, T&& t) :m_graph{graph}, m_data{std::move(t)} {}
+			// A type alias for the container type used to store the adjacency list.
+			using adjacency_list_type = std::set<size_t>;
 
-    template<typename T>
-    T& graph_node<T>::value()noexcept { return m_data; }
+			// Returns a reference to the adjacency list.
+			[[nodiscard]] adjacency_list_type& get_adjacent_nodes_indices();
+			[[nodiscard]] const adjacency_list_type& get_adjacent_nodes_indices() const;
 
-    template<typename T>
-    const T& graph_node<T>::value()const noexcept { return m_data; }
+			T m_data;
+			adjacency_list_type m_adjacentNodeIndices;
+		};
 
-    template<typename T>
-    typename graph_node<T>::adjacency_list_type& graph_node<T>::get_adjacent_nodes_indices()
-    {
-        return m_adjacentNodeIndices;
-    }
+		template<typename T>
+		graph_node<T>::graph_node(directed_graph<T>* graph, const T& t)
+			: m_graph{ graph }
+			, m_data{ t }
+		{
+		}
 
-    template<typename T>
-    const typename graph_node<T>::adjacency_list_type& graph_node<T>::get_adjacent_nodes_indices() const
-    {
-        return m_adjacentNodeIndices;
-    }
+		template<typename T>
+		graph_node<T>::graph_node(directed_graph<T>* graph, T&& t)
+			: m_graph{ graph }
+			, m_data{ std::move(t) }
+		{
+		}
 
-    }
+		template<typename T>
+		T& graph_node<T>::value() noexcept
+		{
+			return m_data;
+		}
+
+		template<typename T>
+		const T& graph_node<T>::value() const noexcept
+		{
+			return m_data;
+		}
+
+		template<typename T>
+		typename graph_node<T>::adjacency_list_type&
+			graph_node<T>::get_adjacent_nodes_indices()
+		{
+			return m_adjacentNodeIndices;
+		}
+
+		template<typename T>
+		const typename graph_node<T>::adjacency_list_type&
+			graph_node<T>::get_adjacent_nodes_indices() const
+		{
+			return m_adjacentNodeIndices;
+		}
+
+	}
 }
