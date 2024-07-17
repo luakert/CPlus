@@ -10,7 +10,7 @@ using namespace ProCpp;
 
 template class directed_graph<wstring>;
 
-int main()
+int main25()
 {
     directed_graph<int> graph;
 	graph.insert(11);
