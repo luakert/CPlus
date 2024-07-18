@@ -2,7 +2,7 @@ module;
 
 #include <cstddef>
 
-export module directed_cust_graph:const_directed_graph_iterator;
+export module directed_cust_graph.const_directed_graph_iterator;
 
 import <iterator>;
 
