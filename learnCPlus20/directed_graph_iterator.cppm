@@ -51,5 +51,20 @@ namespace ProCustCpp
         return const_cast<pointer>(&(this->m_nodeIterator->value()));
     }
 
+    template<typename DirectedGraph>
+    direct_graph_iterator<DirectedGraph>& direct_graph_iterator<DirectedGraph>::operator++()
+    {
+        this->increment();
+        return this*;
+    }
+
+    template<typename DirectedGraph>
+    direct_graph_iterator<DirectedGraph> direct_graph_iterator<DirectedGraph>::operator++(int)
+    {
+        auto oldIt{ *this };
+        this->increment();
+        return oldIt;
+    }
+
 
 }
