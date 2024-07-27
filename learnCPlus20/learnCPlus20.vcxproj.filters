@@ -237,5 +237,8 @@
     <ClCompile Include="directed_graph_iterator.cppm">
       <Filter>源文件\Day2501</Filter>
     </ClCompile>
+    <ClCompile Include="direct_graph_test.cppm">
+      <Filter>源文件\Day2501</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

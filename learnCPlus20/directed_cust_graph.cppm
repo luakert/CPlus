@@ -2,7 +2,7 @@ module;
 
 #include <cstddef>
 
-export module directed_cust_graph_cust;
+export module directed_cust_graph;
 import directed_cust_graph.node;
 import <vector>;
 import <utility>;
