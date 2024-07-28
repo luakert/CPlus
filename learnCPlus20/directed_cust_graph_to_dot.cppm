@@ -6,13 +6,13 @@ import <string_view>;
 import <sstream>;
 import <format>;
 
-namespace ProCpp
+export namespace ProCustCpp
 {
 
 	// Returns a given graph in DOT format.
 	export
 	template <typename T>
-	std::wstring to_dot(const directed_graph<T>& graph, std::wstring_view graph_name)
+	std::wstring to_dot(const directed_cust_graph<T>& graph, std::wstring_view graph_name)
 	{
 		std::wstringstream wss;
 

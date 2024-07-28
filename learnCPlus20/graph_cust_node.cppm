@@ -2,11 +2,11 @@ module;
 
 #include <cstddef>
 
-export module directed_cust_graph.node;
+export module directed_cust_graph.graph_cust_node;
 
 import <set>;
 
-namespace ProCpp
+export namespace ProCustCpp
 {
 
 	// Forward declaration.

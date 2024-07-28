@@ -7,7 +7,7 @@ export module directed_cust_graph.const_adjacent_nodes_iterator;
 import <iterator>;
 import <set>;
 
-namespace ProCpp
+export namespace ProCustCpp
 {
 
 	template<typename GraphType>

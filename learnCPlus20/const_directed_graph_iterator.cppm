@@ -6,7 +6,7 @@ export module directed_cust_graph.const_directed_graph_iterator;
 
 import <iterator>;
 
-namespace ProCustCpp
+export namespace ProCustCpp
 {
     template<typename T>
     class directed_cust_graph;
@@ -32,9 +32,9 @@ namespace ProCustCpp
             const_directed_graph_iterator& operator--();
             const_directed_graph_iterator operator--(int);
 
-            bool opeartor == (const const_directed_graph_iterator&) const = default;
+            bool operator==(const const_directed_graph_iterator&) const = default;
         protected:
-            friend class directed_graph<value_type>;
+            friend class directed_cust_graph<value_type>;
             iterator_type m_nodeIterator;
             const DirectedGraph* m_graph{ nullptr };
             void increment();

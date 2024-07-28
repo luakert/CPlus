@@ -125,12 +125,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AccessList.cppm" />
+    <ClCompile Include="adjacent_nodes_iterator.cppm" />
     <ClCompile Include="BankAccount.cppm" />
     <ClCompile Include="BankDB.cpp" />
     <ClCompile Include="BuddyList.cpp" />
     <ClCompile Include="BuddyList.cppm" />
     <ClCompile Include="CableCompany.cpp" />
     <ClCompile Include="CableCompany.cppm" />
+    <ClCompile Include="const_adjacent_nodes_iterator.cppm" />
     <ClCompile Include="const_directed_graph_iterator.cppm" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="database.cppm" />
@@ -154,13 +156,14 @@
     <ClCompile Include="day32.cpp" />
     <ClCompile Include="day8.cpp" />
     <ClCompile Include="day9.cpp" />
+    <ClCompile Include="directed_cust_graph_to_dot.cppm" />
     <ClCompile Include="directed_graph.cppm" />
-    <ClCompile Include="directed_graph_cust.cppm" />
     <ClCompile Include="directed_graph_iterator.cppm" />
     <ClCompile Include="directed_graph_to_dot.cppm" />
-    <ClCompile Include="direct_graph_test.cppm" />
+    <ClCompile Include="directed_cust_graph.cppm" />
     <ClCompile Include="Employee.cpp" />
     <ClCompile Include="Employee.cppm" />
+    <ClCompile Include="graph_cust_node.cppm" />
     <ClCompile Include="graph_node.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Grid.cppm" />
@@ -174,6 +177,7 @@
     <ClCompile Include="Spreadsheet.cppm" />
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
+    <ClCompile Include="test2501.cpp" />
     <ClCompile Include="testDay22.cpp" />
     <ClCompile Include="testunseq.cpp" />
   </ItemGroup>
