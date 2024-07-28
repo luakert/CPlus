@@ -171,6 +171,7 @@
     <ClCompile Include="MyArraylementation.cppm" />
     <ClCompile Include="MyArrayDefinition.cppm" />
     <ClCompile Include="MyArrayTest.cppm" />
+    <ClCompile Include="NDGrid.cppm" />
     <ClCompile Include="packetbuffer.cppm" />
     <ClCompile Include="round_robin.cppm" />
     <ClCompile Include="Spreadsheet.cpp" />
@@ -178,8 +179,13 @@
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
     <ClCompile Include="test2501.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="test26.cpp" />
+>>>>>>> 20a1ec4 (add day26 newadd new)
     <ClCompile Include="testDay22.cpp" />
     <ClCompile Include="testunseq.cpp" />
+    <ClCompile Include="varargs.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
