@@ -45,35 +45,6 @@ public:
     static const unsigned long long value{ 1 };
 };
 
-template<typename TupleType, int n>
-class TuplePrintHelper
-{
-public:
-    TuplePrintHelper(const TupleType& T)
-    {
-        TuplePrintHelper<TupleType, n - 1> tp{ T };
-        cout << get<n - 1>(T) << endl;
-    }
-};
-
-template<typename TupleType>
-class TuplePrintHelper<TupleType, 0>
-{
-public:
-    TuplePrintHelper(const TupleType&){}
-};
-
-template<typename T>
-void tuplePrint(const T& t)
-{
-    TuplePrintHelper<T, tuple_size<T>::value> tph{ t };
-};
-
-void test26()
-{
-    std::tuple t1{ 167, "false"s, false, 2.3 };
-    tuplePrint(t1);
-}
 
 void test2601()
 {
@@ -83,8 +54,8 @@ void test2601()
     cout << Factorial<6>::value << endl;
 }
 
-int main()
+int main2601()
 {
-    test26();
     system("pause");
+    return 0;
 }

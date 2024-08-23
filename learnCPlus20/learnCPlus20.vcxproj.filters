@@ -282,5 +282,8 @@
     <ClCompile Include="varargs.cpp">
       <Filter>源文件\Day26</Filter>
     </ClCompile>
+    <ClCompile Include="testtuple.cpp">
+      <Filter>源文件\Day26</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

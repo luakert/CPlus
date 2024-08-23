@@ -1,6 +1,7 @@
 export module buddy_list;
 import <map>;
 import <string_view>;
+import <string>;
 import <vector>;
 
 export class BuddyList final
