@@ -88,7 +88,7 @@ void test2607()
     callDoit2(1.0);
 }
 
-int main()
+int main2622()
 {
     test2607();
     system("pause");

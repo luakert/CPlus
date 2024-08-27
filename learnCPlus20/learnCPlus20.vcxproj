@@ -152,6 +152,7 @@
     <ClCompile Include="day23.cpp" />
     <ClCompile Include="day24.cpp" />
     <ClCompile Include="day25.cpp" />
+    <ClCompile Include="day27.cpp" />
     <ClCompile Include="day33.cpp" />
     <ClCompile Include="day32.cpp" />
     <ClCompile Include="day8.cpp" />
@@ -179,10 +180,7 @@
     <ClCompile Include="Spreadsheetcell.cpp" />
     <ClCompile Include="SpreadsheetCell.cppm" />
     <ClCompile Include="test2501.cpp" />
-<<<<<<< HEAD
-=======
     <ClCompile Include="test26.cpp" />
->>>>>>> 20a1ec4 (add day26 newadd new)
     <ClCompile Include="testDay22.cpp" />
     <ClCompile Include="testtuple.cpp" />
     <ClCompile Include="testunseq.cpp" />
