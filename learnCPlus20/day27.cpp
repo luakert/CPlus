@@ -2,8 +2,12 @@
 #include <thread>
 #include <chrono>
 #include <syncstream>
+#include <latch>
 #include <mutex>
+#include <future>
 #include <atomic>
+#include <barrier>
+#include <semaphore>
 #include <format>
 #include <vector>
 
@@ -106,7 +110,6 @@ public:
            // osyncstream{ cout } << "Counter " << m_id << " has value " << i << endl;
             lock_guard lock{ ms_mutex };
             cout << "Counter " << m_id << " has value " << i << endl;
-
         }
     }
 private:
@@ -131,8 +134,86 @@ void test2704()
     }
 }
 
+void test2705()
+{
+    latch startlatch{ 1 };
+    vector<jthread> threads;
+
+    for (int i{ 0 }; i < 10; ++i)
+    {
+        threads.push_back(jthread{ [&startlatch] {
+            cout << "wait to start" << endl;
+            startlatch.wait();
+            cout << this_thread::get_id() << "start to handle " << endl;
+        } });
+    }
+
+    this_thread::sleep_for(3s);
+    startlatch.count_down();
+    cout << "count down " << endl;
+
+}
+
+void completionFunction() noexcept
+{
+    cout << this_thread::get_id() << " do some work" << endl;
+    // sleep
+    this_thread::sleep_for(100ms);
+}
+
+void test2706()
+{
+    const size_t nuberofThread{ 4 };
+    barrier barrier_point{ nuberofThread, completionFunction };
+    vector<jthread> threads;
+    threads.reserve(4);
+    for (int i= 0; i < nuberofThread; ++i)
+    {
+        threads.emplace_back(jthread{ [&barrier_point](stop_token token) {
+            while (!token.stop_requested()) {
+                this_thread::sleep_for(1s);
+                cout << this_thread::get_id()<< " arrive and wait " << endl;
+                barrier_point.arrive_and_wait();
+                if (barrier_point.max())
+                {
+                    break;
+                }
+            }
+            } });
+    }
+    this_thread::sleep_for(10s);
+}
+
+void dopromiseWork(promise<int> thePromise)
+{
+    thePromise.set_value(42);
+}
+
+void test2707()
+{
+    promise<int> myPromise;
+    auto theFuture{ myPromise.get_future() };
+    thread theThread{ dopromiseWork, move(myPromise) };
+    int result{ theFuture.get() };
+    cout << "Result :" << result << endl;
+    theThread.join();
+}
+
+int calculateSum(int a, int b) { return a + b; }
+
+void test2708()
+{
+    packaged_task<int(int, int)>  task{ calculateSum };
+    auto theFuture{ task.get_future() };
+    thread theThread{ move(task), 39, 3 };
+    int result{ theFuture.get() };
+    cout << result << endl;
+    theThread.join();
+}
+
 int main()
 {    
-    test2704();
+    test2708();
+    cout << "main thread will stop" << endl;
     system("pause");
 }
