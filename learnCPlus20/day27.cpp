@@ -1,9 +1,11 @@
 #include <iostream>
 #include <thread>
+#include <queue>
 #include <chrono>
 #include <syncstream>
 #include <latch>
 #include <mutex>
+#include <fstream>
 #include <future>
 #include <atomic>
 #include <barrier>
@@ -211,9 +213,114 @@ void test2708()
     theThread.join();
 }
 
+class MyLogger
+{
+public:
+    MyLogger();
+    virtual ~MyLogger();
+    MyLogger(const MyLogger& src) = delete;
+    MyLogger& operator=(const MyLogger& rhs) = delete;
+    void log(string entry);
+private:
+    void processEntries();
+    void processEntriesHelper(queue<string>& queue, ofstream& ofs) const;
+    mutex m_mutex;
+    bool m_exit{ false };
+    condition_variable m_condVar;
+    queue<string> m_queue;
+    thread m_thread;
+};
+
+MyLogger::MyLogger()
+{
+    m_thread = thread{ &MyLogger::processEntries, this };
+}
+
+MyLogger::~MyLogger()
+{
+    {
+        unique_lock{ m_mutex };
+        m_exit = true;
+    }
+
+    m_condVar.notify_all();
+    m_thread.join();
+}
+
+void MyLogger::log(string entry)
+{
+    unique_lock lock{ m_mutex };
+    m_queue.push(move(entry));
+    m_condVar.notify_all();
+}
+
+void MyLogger::processEntries()
+{
+    ofstream logFile{ "log.txt" };
+        if (logFile.fail())
+        {
+            cerr << "Fail to open logfile" << endl;;
+            return;
+        }
+
+        unique_lock lock{ m_mutex, defer_lock };
+        while (true)
+        {
+            lock.lock();
+            if (!m_exit)
+            {
+                this_thread::sleep_for(1s);
+                m_condVar.wait(lock);
+            }
+            else {
+                processEntriesHelper(m_queue, logFile);
+                break;
+            }
+
+            // this_thread::sleep_for(5s);
+            // m_condVar.wait(lock);
+            queue<string> localqueue;
+            localqueue.swap(m_queue);
+            lock.unlock();
+            processEntriesHelper(localqueue, logFile);
+        }
+}
+
+void MyLogger::processEntriesHelper(queue<string>& queue, ofstream& ofs) const
+{
+    while (!queue.empty())
+    {
+        ofs << queue.front() << endl;
+        queue.pop();
+    }
+}
+
+void logSomeMessage(int id, MyLogger& logger)
+{
+    for (int i{ 0 }; i < 10; ++i)
+    {
+        logger.log(format("Log entry{} from thread{}", i, id));
+    }
+}
+
+void test2709()
+{
+    MyLogger logger;
+    vector<thread> threads;
+    for (size_t i = 0; i < 10; i++)
+    {
+        threads.emplace_back(logSomeMessage, i, ref(logger));
+    }
+
+    for (auto& t :threads)
+    {
+        t.join();
+    }
+}
+
 int main()
 {    
-    test2708();
+    test2706();
     cout << "main thread will stop" << endl;
     system("pause");
 }
